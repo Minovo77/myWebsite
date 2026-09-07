@@ -425,7 +425,7 @@
             }
         }
 
-        /* ===== 管理员控制按钮 ===== */
+        /* ===== 管理员控制按钮（文件卡片） ===== */
         .admin-controls {
             display: none;
             gap: 8px;
@@ -500,6 +500,101 @@
 
         .admin-add-wrapper.show {
             display: block;
+        }
+
+        /* ===== 安装指南 ===== */
+        .install-guide {
+            padding: 60px 0 50px;
+            background: #f7fafc;
+        }
+
+        .install-guide .section-title i {
+            color: #4A90D9;
+            margin-right: 8px;
+        }
+
+        .install-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 28px;
+        }
+
+        .install-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 24px 22px 22px;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            transition: box-shadow 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .install-card:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .install-card h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .install-card h4 i {
+            color: #4A90D9;
+            font-size: 1.1rem;
+        }
+
+        .install-card ol {
+            padding-left: 20px;
+            color: #4a5568;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            flex: 1;
+            margin-bottom: 12px;
+        }
+
+        .install-card ol li::marker {
+            color: #4A90D9;
+            font-weight: 600;
+        }
+
+        /* 安装卡片的管理按钮 */
+        .install-admin-controls {
+            display: none;
+            gap: 8px;
+            margin-top: 8px;
+            padding-top: 14px;
+            border-top: 1px dashed rgba(0, 0, 0, 0.08);
+        }
+
+        .install-admin-controls.show {
+            display: flex;
+        }
+
+        .install-admin-controls button {
+            flex: 1;
+            padding: 8px 8px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: #edf2f7;
+            color: #2d3748;
+        }
+
+        .install-admin-controls button:hover {
+            background: #e2e8f0;
         }
 
         /* ===== 模态框 ===== */
@@ -639,62 +734,6 @@
 
         .btn-modal-save:hover {
             background: #357ABD;
-        }
-
-        /* ===== 安装指南 ===== */
-        .install-guide {
-            padding: 60px 0 50px;
-            background: #f7fafc;
-        }
-
-        .install-guide .section-title i {
-            color: #4A90D9;
-            margin-right: 8px;
-        }
-
-        .install-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 28px;
-        }
-
-        .install-card {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 24px 22px 22px;
-            border: 1px solid rgba(0, 0, 0, 0.04);
-            transition: box-shadow 0.3s ease;
-        }
-
-        .install-card:hover {
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
-        }
-
-        .install-card h4 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #1a202c;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .install-card h4 i {
-            color: #4A90D9;
-            font-size: 1.1rem;
-        }
-
-        .install-card ol {
-            padding-left: 20px;
-            color: #4a5568;
-            font-size: 0.9rem;
-            line-height: 1.8;
-        }
-
-        .install-card ol li::marker {
-            color: #4A90D9;
-            font-weight: 600;
         }
 
         /* ===== 页脚 ===== */
@@ -960,35 +999,9 @@
     <section class="install-guide" id="install">
         <div class="container">
             <h2 class="section-title"><i class="fas fa-tools"></i>安装方式</h2>
-            <p class="section-sub">按照以下步骤完成工具安装，如有疑问请联系技术支持</p>
-            <div class="install-grid">
-                <div class="install-card">
-                    <h4><i class="fas fa-cube"></i> 通用 EXE 安装包</h4>
-                    <ol>
-                        <li>下载 <strong>EXE 安装包</strong> 到本地</li>
-                        <li>双击运行安装程序，点击「下一步」</li>
-                        <li>选择安装目录（默认即可），继续安装</li>
-                        <li>安装完成后，桌面生成快捷方式，双击启动</li>
-                    </ol>
-                </div>
-                <div class="install-card">
-                    <h4><i class="fas fa-archive"></i> ZIP 压缩包工具</h4>
-                    <ol>
-                        <li>下载 <strong>ZIP 压缩包</strong> 并解压</li>
-                        <li>进入解压文件夹，运行 <code>setup.exe</code> 或 <code>start.bat</code></li>
-                        <li>按向导完成配置（数据库连接等）</li>
-                        <li>启动工具，登录后即可使用</li>
-                    </ol>
-                </div>
-                <div class="install-card">
-                    <h4><i class="fas fa-puzzle-piece"></i> 浏览器扩展 (CRX)</h4>
-                    <ol>
-                        <li>下载 <strong>CRX 文件</strong> 到本地</li>
-                        <li>打开 Chrome 浏览器，进入 <code>chrome://extensions/</code></li>
-                        <li>开启右上角「开发者模式」</li>
-                        <li>将 CRX 文件拖入页面，点击「添加扩展」</li>
-                    </ol>
-                </div>
+            <p class="section-sub">按照以下步骤完成工具安装，管理员可编辑安装说明</p>
+            <div class="install-grid" id="installGrid">
+                <!-- 由 JavaScript 动态渲染 -->
             </div>
         </div>
     </section>
@@ -1007,7 +1020,7 @@
         </div>
     </footer>
 
-    <!-- ===== 模态框 (添加/编辑) ===== -->
+    <!-- ===== 模态框 (文件编辑/新增) ===== -->
     <div class="modal-overlay" id="fileModal">
         <div class="modal-box">
             <h2 id="modalTitle"><i class="fas fa-edit"></i> 编辑资源</h2>
@@ -1060,13 +1073,40 @@
         </div>
     </div>
 
+    <!-- ===== 模态框 (安装指南编辑) ===== -->
+    <div class="modal-overlay" id="installModal">
+        <div class="modal-box">
+            <h2 id="installModalTitle"><i class="fas fa-edit"></i> 编辑安装说明</h2>
+            <form id="installForm" autocomplete="off">
+                <input type="hidden" id="installEditIndex" value="-1" />
+
+                <div class="form-group">
+                    <label for="installTitle">标题 *</label>
+                    <input type="text" id="installTitle" placeholder="例如：通用 EXE 安装包" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="installSteps">步骤 (每行一个步骤) *</label>
+                    <textarea id="installSteps" rows="6" placeholder="1. 下载文件&#10;2. 双击运行&#10;3. 完成安装" required></textarea>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-modal-cancel" id="installModalCancelBtn">取消</button>
+                    <button type="submit" class="btn-modal-save" id="installModalSaveBtn"><i class="fas fa-save"></i> 保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- ===== JavaScript ===== -->
     <script>
         (function() {
             'use strict';
 
-            // ========== 1. 数据层 ==========
-            const STORAGE_KEY = 'yune_cb_files';
+            // ============================================================
+            // 1. 数据层 – 文件资源
+            // ============================================================
+            const FILE_STORAGE_KEY = 'yune_cb_files';
             const DEFAULT_FILES = [{
                 name: '裕能Shopee运营助手',
                 version: 'v2.0.1',
@@ -1093,16 +1133,59 @@
                 fileName: '多语言翻译插件_v1.0.2.crx'
             }];
 
+            // ============================================================
+            // 2. 数据层 – 安装指南
+            // ============================================================
+            const INSTALL_STORAGE_KEY = 'yune_cb_install';
+            const DEFAULT_INSTALL = [{
+                title: '通用 EXE 安装包',
+                icon: 'fa-cube',
+                steps: [
+                    '下载 <strong>EXE 安装包</strong> 到本地',
+                    '双击运行安装程序，点击「下一步」',
+                    '选择安装目录（默认即可），继续安装',
+                    '安装完成后，桌面生成快捷方式，双击启动'
+                ]
+            }, {
+                title: 'ZIP 压缩包工具',
+                icon: 'fa-archive',
+                steps: [
+                    '下载 <strong>ZIP 压缩包</strong> 并解压',
+                    '进入解压文件夹，运行 <code>setup.exe</code> 或 <code>start.bat</code>',
+                    '按向导完成配置（数据库连接等）',
+                    '启动工具，登录后即可使用'
+                ]
+            }, {
+                title: '浏览器扩展 (CRX)',
+                icon: 'fa-puzzle-piece',
+                steps: [
+                    '下载 <strong>CRX 文件</strong> 到本地',
+                    '打开 Chrome 浏览器，进入 <code>chrome://extensions/</code>',
+                    '开启右上角「开发者模式」',
+                    '将 CRX 文件拖入页面，点击「添加扩展」'
+                ]
+            }];
+
+            // ============================================================
+            // 3. 全局状态
+            // ============================================================
             let files = [];
+            let installData = [];
             let isAdmin = false;
 
-            // DOM 引用
+            // ============================================================
+            // 4. DOM 引用
+            // ============================================================
             const fileGrid = document.getElementById('fileGrid');
+            const installGrid = document.getElementById('installGrid');
             const adminToggleBtn = document.getElementById('adminToggleBtn');
             const adminAddWrapper = document.getElementById('adminAddWrapper');
-            const modalOverlay = document.getElementById('fileModal');
-            const modalTitle = document.getElementById('modalTitle');
-            const editIndexInput = document.getElementById('editIndex');
+
+            // 文件模态框
+            const fileModal = document.getElementById('fileModal');
+            const fileModalTitle = document.getElementById('modalTitle');
+            const fileEditIndex = document.getElementById('editIndex');
+            const fileForm = document.getElementById('fileForm');
             const fileNameInput = document.getElementById('fileName');
             const fileVersionInput = document.getElementById('fileVersion');
             const fileSizeInput = document.getElementById('fileSize');
@@ -1110,13 +1193,23 @@
             const fileIconInput = document.getElementById('fileIcon');
             const fileExtInput = document.getElementById('fileExt');
             const fileUploadInput = document.getElementById('fileUpload');
-            const fileForm = document.getElementById('fileForm');
-            const modalCancelBtn = document.getElementById('modalCancelBtn');
+            const fileModalCancel = document.getElementById('modalCancelBtn');
             const openAddModalBtn = document.getElementById('openAddModalBtn');
 
-            // ========== 2. 工具函数 ==========
+            // 安装模态框
+            const installModal = document.getElementById('installModal');
+            const installModalTitle = document.getElementById('installModalTitle');
+            const installEditIndex = document.getElementById('installEditIndex');
+            const installForm = document.getElementById('installForm');
+            const installTitleInput = document.getElementById('installTitle');
+            const installStepsInput = document.getElementById('installSteps');
+            const installModalCancel = document.getElementById('installModalCancelBtn');
+
+            // ============================================================
+            // 5. 工具函数
+            // ============================================================
             function loadFiles() {
-                const stored = localStorage.getItem(STORAGE_KEY);
+                const stored = localStorage.getItem(FILE_STORAGE_KEY);
                 if (stored) {
                     try {
                         files = JSON.parse(stored);
@@ -1138,10 +1231,45 @@
             }
 
             function saveFiles() {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(files));
+                localStorage.setItem(FILE_STORAGE_KEY, JSON.stringify(files));
             }
 
-            // ========== 3. 渲染 ==========
+            function loadInstall() {
+                const stored = localStorage.getItem(INSTALL_STORAGE_KEY);
+                if (stored) {
+                    try {
+                        installData = JSON.parse(stored);
+                        if (!Array.isArray(installData) || installData.length === 0) {
+                            installData = JSON.parse(JSON.stringify(DEFAULT_INSTALL));
+                        }
+                    } catch (e) {
+                        installData = JSON.parse(JSON.stringify(DEFAULT_INSTALL));
+                    }
+                } else {
+                    installData = JSON.parse(JSON.stringify(DEFAULT_INSTALL));
+                }
+                saveInstall();
+            }
+
+            function saveInstall() {
+                localStorage.setItem(INSTALL_STORAGE_KEY, JSON.stringify(installData));
+            }
+
+            function escapeHtml(text) {
+                if (!text) return '';
+                const map = {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#039;'
+                };
+                return String(text).replace(/[&<>"']/g, function(m) { return map[m]; });
+            }
+
+            // ============================================================
+            // 6. 渲染函数 – 文件
+            // ============================================================
             function renderFiles() {
                 if (files.length === 0) {
                     fileGrid.innerHTML = `
@@ -1218,11 +1346,11 @@
                     });
                 });
 
-                // 管理按钮
+                // 文件管理按钮
                 document.querySelectorAll('.btn-edit-file').forEach(btn => {
                     btn.addEventListener('click', function() {
                         const idx = parseInt(this.getAttribute('data-index'), 10);
-                        openEditModal(idx);
+                        openFileModal('编辑资源', idx);
                     });
                 });
                 document.querySelectorAll('.btn-delete-file').forEach(btn => {
@@ -1239,27 +1367,57 @@
                 adminAddWrapper.classList.toggle('show', isAdmin);
             }
 
-            function escapeHtml(text) {
-                if (!text) return '';
-                const map = {
-                    '&': '&amp;',
-                    '<': '&lt;',
-                    '>': '&gt;',
-                    '"': '&quot;',
-                    "'": '&#039;'
-                };
-                return String(text).replace(/[&<>"']/g, function(m) { return map[m]; });
+            // ============================================================
+            // 7. 渲染函数 – 安装指南
+            // ============================================================
+            function renderInstall() {
+                if (installData.length === 0) {
+                    installGrid.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-info-circle"></i>
+                            <p>暂无安装指南，请管理员添加。</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let html = '';
+                installData.forEach((item, index) => {
+                    const icon = item.icon || 'fa-cube';
+                    const stepsHtml = item.steps.map(step => `<li>${step}</li>`).join('');
+                    html += `
+                        <div class="install-card" data-install-index="${index}">
+                            <h4><i class="fas ${icon}"></i> ${escapeHtml(item.title)}</h4>
+                            <ol>${stepsHtml}</ol>
+                            <div class="install-admin-controls ${isAdmin ? 'show' : ''}">
+                                <button class="btn-edit-install" data-index="${index}"><i class="fas fa-pen"></i> 编辑</button>
+                            </div>
+                        </div>
+                    `;
+                });
+                installGrid.innerHTML = html;
+
+                // 绑定安装编辑按钮
+                document.querySelectorAll('.btn-edit-install').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const idx = parseInt(this.getAttribute('data-index'), 10);
+                        openInstallModal('编辑安装说明', idx);
+                    });
+                });
             }
 
-            // ========== 4. 管理员模式 ==========
+            // ============================================================
+            // 8. 管理员切换 (密码: yuneng)
+            // ============================================================
             function toggleAdmin() {
                 if (!isAdmin) {
-                    const pwd = prompt('请输入管理员密码 (默认: admin)');
-                    if (pwd === 'admin') {
+                    const pwd = prompt('请输入管理员密码');
+                    if (pwd === 'yuneng') {
                         isAdmin = true;
                         adminToggleBtn.classList.add('admin-active');
                         adminToggleBtn.innerHTML = '<i class="fas fa-user-shield"></i> 退出管理';
                         renderFiles();
+                        renderInstall();
                     } else if (pwd !== null) {
                         alert('密码错误');
                     }
@@ -1268,6 +1426,7 @@
                     adminToggleBtn.classList.remove('admin-active');
                     adminToggleBtn.innerHTML = '<i class="fas fa-user-shield"></i> 管理';
                     renderFiles();
+                    renderInstall();
                 }
             }
 
@@ -1276,10 +1435,12 @@
                 toggleAdmin();
             });
 
-            // ========== 5. 模态框 ==========
-            function openModal(title, index) {
-                modalTitle.textContent = title;
-                editIndexInput.value = index;
+            // ============================================================
+            // 9. 文件模态框
+            // ============================================================
+            function openFileModal(title, index) {
+                fileModalTitle.textContent = title;
+                fileEditIndex.value = index;
                 if (index >= 0 && index < files.length) {
                     const f = files[index];
                     fileNameInput.value = f.name || '';
@@ -1297,24 +1458,16 @@
                     fileExtInput.value = '';
                 }
                 fileUploadInput.value = '';
-                modalOverlay.classList.add('active');
+                fileModal.classList.add('active');
             }
 
-            function closeModal() {
-                modalOverlay.classList.remove('active');
+            function closeFileModal() {
+                fileModal.classList.remove('active');
             }
 
-            function openEditModal(index) {
-                openModal('编辑资源', index);
-            }
-
-            openAddModalBtn.addEventListener('click', function() {
-                openModal('上传新资源', -1);
-            });
-
-            modalCancelBtn.addEventListener('click', closeModal);
-            modalOverlay.addEventListener('click', function(e) {
-                if (e.target === modalOverlay) closeModal();
+            fileModalCancel.addEventListener('click', closeFileModal);
+            fileModal.addEventListener('click', function(e) {
+                if (e.target === fileModal) closeFileModal();
             });
 
             fileForm.addEventListener('submit', function(e) {
@@ -1326,7 +1479,7 @@
                     return;
                 }
 
-                const index = parseInt(editIndexInput.value, 10);
+                const index = parseInt(fileEditIndex.value, 10);
                 const newFile = {
                     name: name,
                     version: fileVersionInput.value.trim() || 'v1.0',
@@ -1359,12 +1512,78 @@
 
                 saveFiles();
                 renderFiles();
-                closeModal();
+                closeFileModal();
             });
 
-            // ========== 6. 初始化 ==========
+            openAddModalBtn.addEventListener('click', function() {
+                openFileModal('上传新资源', -1);
+            });
+
+            // ============================================================
+            // 10. 安装模态框
+            // ============================================================
+            function openInstallModal(title, index) {
+                installModalTitle.textContent = title;
+                installEditIndex.value = index;
+                if (index >= 0 && index < installData.length) {
+                    const item = installData[index];
+                    installTitleInput.value = item.title || '';
+                    installStepsInput.value = item.steps ? item.steps.join('\n') : '';
+                } else {
+                    installTitleInput.value = '';
+                    installStepsInput.value = '';
+                }
+                installModal.classList.add('active');
+            }
+
+            function closeInstallModal() {
+                installModal.classList.remove('active');
+            }
+
+            installModalCancel.addEventListener('click', closeInstallModal);
+            installModal.addEventListener('click', function(e) {
+                if (e.target === installModal) closeInstallModal();
+            });
+
+            installForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const title = installTitleInput.value.trim();
+                const stepsRaw = installStepsInput.value.trim();
+                if (!title || !stepsRaw) {
+                    alert('请填写标题和步骤');
+                    return;
+                }
+                const steps = stepsRaw.split('\n').filter(s => s.trim() !== '');
+                if (steps.length === 0) {
+                    alert('请至少填写一个步骤');
+                    return;
+                }
+
+                const index = parseInt(installEditIndex.value, 10);
+                const newItem = {
+                    title: title,
+                    icon: 'fa-cube', // 保留默认图标，可后续扩展
+                    steps: steps
+                };
+
+                if (index >= 0 && index < installData.length) {
+                    installData[index] = newItem;
+                } else {
+                    installData.push(newItem);
+                }
+
+                saveInstall();
+                renderInstall();
+                closeInstallModal();
+            });
+
+            // ============================================================
+            // 11. 初始化 & 其他
+            // ============================================================
             loadFiles();
+            loadInstall();
             renderFiles();
+            renderInstall();
 
             // 导航高亮
             const sections = document.querySelectorAll('section[id]');
