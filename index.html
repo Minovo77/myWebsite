@@ -4,40 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>裕能跨境电商 · 内部资源管理</title>
-    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
-        /* ===== 全局重置 & 基础 ===== */
-        *,
-        *::before,
-        *::after {
+        /* ===== 全局重置 ===== */
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         html {
             scroll-behavior: smooth;
         }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: #f7fafc;
             color: #2d3748;
             line-height: 1.6;
             padding-top: 64px;
         }
-
         a {
             text-decoration: none;
             color: inherit;
         }
-
-        img {
-            max-width: 100%;
-            display: block;
-        }
-
         .container {
             max-width: 1140px;
             margin: 0 auto;
@@ -53,25 +41,21 @@
             z-index: 1000;
             background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            transition: box-shadow 0.3s ease;
             height: 64px;
             display: flex;
             align-items: center;
+            transition: box-shadow 0.3s;
         }
-
         .navbar.scrolled {
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
         }
-
         .navbar .container {
             display: flex;
             align-items: center;
             justify-content: space-between;
             width: 100%;
         }
-
         .nav-brand {
             font-weight: 700;
             font-size: 1.25rem;
@@ -80,39 +64,32 @@
             align-items: center;
             gap: 8px;
         }
-
         .nav-brand i {
             color: #4A90D9;
             font-size: 1.4rem;
         }
-
         .nav-brand span {
             color: #4A90D9;
         }
-
         .nav-toggle {
             display: none;
             background: none;
             border: none;
             font-size: 1.5rem;
-            color: #2d3748;
             cursor: pointer;
             padding: 4px 8px;
             border-radius: 6px;
             transition: background 0.2s;
         }
-
         .nav-toggle:hover {
             background: rgba(0, 0, 0, 0.04);
         }
-
         .nav-menu {
             display: flex;
             list-style: none;
             gap: 8px;
             align-items: center;
         }
-
         .nav-menu li a {
             display: inline-block;
             padding: 8px 16px;
@@ -120,10 +97,9 @@
             font-size: 0.95rem;
             font-weight: 500;
             color: #4a5568;
-            transition: all 0.2s ease;
+            transition: all 0.2s;
             position: relative;
         }
-
         .nav-menu li a::after {
             content: '';
             position: absolute;
@@ -134,85 +110,51 @@
             height: 2px;
             background: #4A90D9;
             border-radius: 2px;
-            transition: width 0.25s ease;
+            transition: width 0.25s;
         }
-
         .nav-menu li a:hover {
             color: #4A90D9;
             background: rgba(74, 144, 217, 0.06);
         }
-
         .nav-menu li a:hover::after {
             width: 60%;
         }
-
         .nav-menu li a.active {
             color: #4A90D9;
             background: rgba(74, 144, 217, 0.08);
         }
-
         .nav-menu li a.active::after {
             width: 60%;
         }
-
         .nav-admin-btn {
             background: #4A90D9;
             color: #fff !important;
             border-radius: 20px !important;
             padding: 6px 18px !important;
             font-weight: 600 !important;
-            transition: all 0.3s !important;
         }
-
         .nav-admin-btn::after {
             display: none !important;
         }
-
         .nav-admin-btn:hover {
             background: #357ABD !important;
             color: #fff !important;
             transform: scale(1.04);
         }
-
         .nav-admin-btn.admin-active {
             background: #e53e3e !important;
         }
-
         .nav-admin-btn.admin-active:hover {
             background: #c53030 !important;
         }
 
-        /* ===== Hero 区 ===== */
+        /* ===== Hero 区 (无头像) ===== */
         .hero {
             padding: 60px 0 50px;
             background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
             text-align: center;
             border-bottom: 1px solid rgba(0, 0, 0, 0.04);
         }
-
-        .hero-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #fff;
-            box-shadow: 0 8px 30px rgba(74, 144, 217, 0.18);
-            margin: 0 auto 16px;
-            display: block;
-            background: #4A90D9;
-            color: #fff;
-            font-size: 3.2rem;
-            font-weight: 600;
-            line-height: 120px;
-            text-align: center;
-            transition: transform 0.3s ease;
-            cursor: default;
-        }
-
-        .hero-avatar:hover {
-            transform: scale(1.03);
-        }
-
         .hero h1 {
             font-size: 2.8rem;
             font-weight: 700;
@@ -220,21 +162,18 @@
             letter-spacing: -0.5px;
             margin-bottom: 6px;
         }
-
         .hero .subtitle {
             font-size: 1.15rem;
             color: #4A90D9;
             font-weight: 500;
             margin-bottom: 12px;
         }
-
         .hero .subtitle i {
             margin: 0 6px;
             opacity: 0.5;
             font-size: 0.7rem;
             vertical-align: middle;
         }
-
         .hero .bio {
             max-width: 580px;
             margin: 0 auto;
@@ -242,7 +181,6 @@
             font-size: 1rem;
             line-height: 1.7;
         }
-
         .hero .bio strong {
             color: #2d3748;
         }
@@ -256,7 +194,6 @@
             margin-bottom: 8px;
             letter-spacing: -0.3px;
         }
-
         .section-sub {
             text-align: center;
             color: #718096;
@@ -269,36 +206,30 @@
             padding: 60px 0 50px;
             background: #ffffff;
         }
-
         .downloads .section-title i {
             color: #4A90D9;
             margin-right: 8px;
         }
-
         .file-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 28px;
         }
-
         .file-card {
             background: #f7fafc;
             border-radius: 16px;
             padding: 28px 24px 24px;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
             border: 1px solid rgba(0, 0, 0, 0.04);
-            position: relative;
             display: flex;
             flex-direction: column;
         }
-
         .file-card:hover {
             transform: translateY(-6px);
             box-shadow: 0 16px 48px rgba(74, 144, 217, 0.10);
             border-color: rgba(74, 144, 217, 0.15);
             background: #ffffff;
         }
-
         .file-icon {
             font-size: 2.6rem;
             color: #4A90D9;
@@ -311,14 +242,12 @@
             align-items: center;
             justify-content: center;
         }
-
         .file-card h3 {
             font-size: 1.15rem;
             font-weight: 600;
             color: #1a202c;
             margin-bottom: 4px;
         }
-
         .file-card .file-version {
             font-size: 0.8rem;
             color: #4A90D9;
@@ -330,7 +259,6 @@
             margin-bottom: 8px;
             width: fit-content;
         }
-
         .file-card .file-desc {
             color: #4a5568;
             font-size: 0.92rem;
@@ -338,7 +266,6 @@
             flex: 1;
             margin-bottom: 16px;
         }
-
         .file-meta {
             display: flex;
             gap: 16px;
@@ -347,18 +274,15 @@
             margin-bottom: 16px;
             flex-wrap: wrap;
         }
-
         .file-meta span {
             display: flex;
             align-items: center;
             gap: 4px;
         }
-
         .file-meta i {
             color: #4A90D9;
             width: 16px;
         }
-
         .btn-download {
             display: inline-flex;
             align-items: center;
@@ -372,35 +296,19 @@
             font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: all 0.25s;
             width: 100%;
             margin-top: auto;
         }
-
         .btn-download:hover {
             background: #357ABD;
             transform: scale(1.01);
             box-shadow: 0 6px 20px rgba(74, 144, 217, 0.30);
         }
-
-        .btn-download:active {
-            transform: scale(0.97);
-        }
-
-        .btn-download i {
-            font-size: 1rem;
-            transition: transform 0.3s ease;
-        }
-
-        .btn-download:hover i {
-            transform: translateY(2px);
-        }
-
         .btn-download.loading {
             opacity: 0.7;
             pointer-events: none;
         }
-
         .btn-download .spinner {
             display: none;
             width: 18px;
@@ -410,22 +318,19 @@
             border-radius: 50%;
             animation: spin 0.7s linear infinite;
         }
-
         .btn-download.loading .spinner {
             display: inline-block;
         }
-
         .btn-download.loading .btn-text {
             display: none;
         }
-
         @keyframes spin {
             to {
                 transform: rotate(360deg);
             }
         }
 
-        /* ===== 管理员控制按钮（文件卡片） ===== */
+        /* ===== 管理员控制（文件） ===== */
         .admin-controls {
             display: none;
             gap: 8px;
@@ -433,14 +338,12 @@
             padding-top: 14px;
             border-top: 1px dashed rgba(0, 0, 0, 0.08);
         }
-
         .admin-controls.show {
             display: flex;
         }
-
         .admin-controls button {
             flex: 1;
-            padding: 8px 8px;
+            padding: 8px;
             border: none;
             border-radius: 8px;
             font-size: 0.85rem;
@@ -452,25 +355,20 @@
             justify-content: center;
             gap: 6px;
         }
-
         .btn-edit-file {
             background: #edf2f7;
             color: #2d3748;
         }
-
         .btn-edit-file:hover {
             background: #e2e8f0;
         }
-
         .btn-delete-file {
             background: #fff5f5;
             color: #e53e3e;
         }
-
         .btn-delete-file:hover {
             background: #fed7d7;
         }
-
         .btn-add-file {
             background: #4A90D9;
             color: #fff;
@@ -480,24 +378,21 @@
             font-weight: 600;
             font-size: 1rem;
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: all 0.25s;
             display: inline-flex;
             align-items: center;
             gap: 10px;
             margin: 20px auto 0;
         }
-
         .btn-add-file:hover {
             background: #357ABD;
             transform: scale(1.02);
             box-shadow: 0 6px 20px rgba(74, 144, 217, 0.25);
         }
-
         .admin-add-wrapper {
             text-align: center;
             display: none;
         }
-
         .admin-add-wrapper.show {
             display: block;
         }
@@ -507,33 +402,27 @@
             padding: 60px 0 50px;
             background: #f7fafc;
         }
-
         .install-guide .section-title i {
             color: #4A90D9;
             margin-right: 8px;
         }
-
         .install-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 28px;
         }
-
         .install-card {
             background: #ffffff;
             border-radius: 16px;
             padding: 24px 22px 22px;
             border: 1px solid rgba(0, 0, 0, 0.04);
-            transition: box-shadow 0.3s ease;
-            position: relative;
+            transition: box-shadow 0.3s;
             display: flex;
             flex-direction: column;
         }
-
         .install-card:hover {
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
         }
-
         .install-card h4 {
             font-size: 1rem;
             font-weight: 600;
@@ -543,12 +432,10 @@
             align-items: center;
             gap: 8px;
         }
-
         .install-card h4 i {
             color: #4A90D9;
             font-size: 1.1rem;
         }
-
         .install-card ol {
             padding-left: 20px;
             color: #4a5568;
@@ -557,13 +444,12 @@
             flex: 1;
             margin-bottom: 12px;
         }
-
         .install-card ol li::marker {
             color: #4A90D9;
             font-weight: 600;
         }
 
-        /* 安装卡片的管理按钮 */
+        /* 安装卡片管理按钮 */
         .install-admin-controls {
             display: none;
             gap: 8px;
@@ -571,14 +457,12 @@
             padding-top: 14px;
             border-top: 1px dashed rgba(0, 0, 0, 0.08);
         }
-
         .install-admin-controls.show {
             display: flex;
         }
-
         .install-admin-controls button {
             flex: 1;
-            padding: 8px 8px;
+            padding: 8px;
             border: none;
             border-radius: 8px;
             font-size: 0.85rem;
@@ -592,9 +476,43 @@
             background: #edf2f7;
             color: #2d3748;
         }
-
         .install-admin-controls button:hover {
             background: #e2e8f0;
+        }
+        .install-admin-controls .btn-delete-install {
+            background: #fff5f5;
+            color: #e53e3e;
+        }
+        .install-admin-controls .btn-delete-install:hover {
+            background: #fed7d7;
+        }
+
+        .btn-add-install {
+            background: #4A90D9;
+            color: #fff;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.25s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 20px auto 0;
+        }
+        .btn-add-install:hover {
+            background: #357ABD;
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(74, 144, 217, 0.25);
+        }
+        .admin-add-install-wrapper {
+            text-align: center;
+            display: none;
+        }
+        .admin-add-install-wrapper.show {
+            display: block;
         }
 
         /* ===== 模态框 ===== */
@@ -607,17 +525,14 @@
             bottom: 0;
             background: rgba(0, 0, 0, 0.45);
             backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
             z-index: 2000;
             justify-content: center;
             align-items: center;
             padding: 20px;
         }
-
         .modal-overlay.active {
             display: flex;
         }
-
         .modal-box {
             background: #fff;
             border-radius: 24px;
@@ -625,9 +540,8 @@
             width: 100%;
             padding: 32px 28px;
             box-shadow: 0 32px 64px rgba(0, 0, 0, 0.15);
-            animation: fadeUp 0.3s ease;
+            animation: fadeUp 0.3s;
         }
-
         @keyframes fadeUp {
             from {
                 transform: translateY(30px);
@@ -638,7 +552,6 @@
                 opacity: 1;
             }
         }
-
         .modal-box h2 {
             font-size: 1.5rem;
             font-weight: 700;
@@ -648,15 +561,12 @@
             align-items: center;
             gap: 10px;
         }
-
         .modal-box h2 i {
             color: #4A90D9;
         }
-
         .form-group {
             margin-bottom: 18px;
         }
-
         .form-group label {
             display: block;
             font-weight: 600;
@@ -664,10 +574,8 @@
             color: #2d3748;
             margin-bottom: 4px;
         }
-
         .form-group input,
-        .form-group textarea,
-        .form-group select {
+        .form-group textarea {
             width: 100%;
             padding: 10px 14px;
             border: 1px solid #e2e8f0;
@@ -677,37 +585,30 @@
             background: #f7fafc;
             font-family: inherit;
         }
-
         .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
+        .form-group textarea:focus {
             outline: none;
             border-color: #4A90D9;
             box-shadow: 0 0 0 3px rgba(74, 144, 217, 0.15);
             background: #fff;
         }
-
         .form-group textarea {
             min-height: 70px;
             resize: vertical;
         }
-
         .form-row {
             display: flex;
             gap: 16px;
         }
-
         .form-row .form-group {
             flex: 1;
         }
-
         .modal-actions {
             display: flex;
             gap: 12px;
             margin-top: 24px;
             justify-content: flex-end;
         }
-
         .modal-actions button {
             padding: 10px 28px;
             border: none;
@@ -717,21 +618,17 @@
             cursor: pointer;
             transition: all 0.25s;
         }
-
         .btn-modal-cancel {
             background: #edf2f7;
             color: #4a5568;
         }
-
         .btn-modal-cancel:hover {
             background: #e2e8f0;
         }
-
         .btn-modal-save {
             background: #4A90D9;
             color: #fff;
         }
-
         .btn-modal-save:hover {
             background: #357ABD;
         }
@@ -745,29 +642,24 @@
             font-size: 0.9rem;
             border-top: 1px solid rgba(255, 255, 255, 0.04);
         }
-
         .footer .container {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 6px;
         }
-
         .footer .brand {
             color: #fff;
             font-weight: 600;
             letter-spacing: 0.5px;
         }
-
         .footer .brand span {
             color: #4A90D9;
         }
-
         .footer .author {
             color: #718096;
             font-size: 0.85rem;
         }
-
         .footer .author i {
             color: #4A90D9;
             margin: 0 4px;
@@ -780,7 +672,6 @@
             color: #718096;
             grid-column: 1 / -1;
         }
-
         .empty-state i {
             font-size: 3rem;
             color: #cbd5e0;
@@ -792,7 +683,6 @@
             .nav-toggle {
                 display: block;
             }
-
             .nav-menu {
                 position: absolute;
                 top: 64px;
@@ -800,7 +690,6 @@
                 right: 0;
                 background: rgba(255, 255, 255, 0.98);
                 backdrop-filter: blur(12px);
-                -webkit-backdrop-filter: blur(12px);
                 flex-direction: column;
                 padding: 12px 0 18px;
                 gap: 0;
@@ -808,16 +697,14 @@
                 box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
                 transform: translateY(-120%);
                 opacity: 0;
-                transition: all 0.35s ease;
+                transition: all 0.35s;
                 pointer-events: none;
             }
-
             .nav-menu.open {
                 transform: translateY(0);
                 opacity: 1;
                 pointer-events: auto;
             }
-
             .nav-menu li a {
                 display: block;
                 padding: 12px 24px;
@@ -825,15 +712,9 @@
                 border-radius: 0;
                 text-align: center;
             }
-
             .nav-menu li a::after {
                 display: none;
             }
-
-            .nav-menu li a:hover {
-                background: rgba(74, 144, 217, 0.06);
-            }
-
             .nav-admin-btn {
                 border-radius: 0 !important;
                 background: transparent !important;
@@ -848,86 +729,62 @@
                 color: #e53e3e !important;
                 background: transparent !important;
             }
-
             .hero h1 {
                 font-size: 2.2rem;
             }
-
             .hero .subtitle {
                 font-size: 1rem;
             }
-
             .hero .bio {
                 font-size: 0.95rem;
                 padding: 0 8px;
             }
-
             .section-title {
                 font-size: 1.6rem;
             }
-
             .file-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
-
             .install-grid {
                 grid-template-columns: 1fr;
                 gap: 18px;
             }
-
-            .hero-avatar {
-                width: 100px;
-                height: 100px;
-                font-size: 2.6rem;
-                line-height: 100px;
-            }
-
             .form-row {
                 flex-direction: column;
                 gap: 0;
             }
-
             .modal-box {
                 padding: 24px 18px;
             }
         }
-
         @media (max-width: 480px) {
             .container {
                 padding: 0 16px;
             }
-
             .hero {
                 padding: 40px 0 32px;
             }
-
             .hero h1 {
                 font-size: 1.8rem;
             }
-
             .hero .subtitle {
                 font-size: 0.9rem;
             }
-
             .file-card {
                 padding: 20px 16px 18px;
             }
-
             .btn-download {
                 font-size: 0.9rem;
                 padding: 10px 16px;
             }
-
             .section-title {
                 font-size: 1.4rem;
             }
-
             .nav-brand {
                 font-size: 1.05rem;
             }
         }
-
         @media (min-width: 1200px) {
             .file-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -936,37 +793,32 @@
                 grid-template-columns: repeat(3, 1fr);
             }
         }
-
-        .text-muted {
-            color: #718096;
-        }
     </style>
 </head>
 <body>
 
     <!-- ===== 导航栏 ===== -->
-    <nav class="navbar" id="navbar" role="navigation" aria-label="主导航">
+    <nav class="navbar" id="navbar">
         <div class="container">
             <div class="nav-brand">
                 <i class="fas fa-cube"></i>
                 裕能<span>跨境</span>
             </div>
-            <button class="nav-toggle" id="navToggle" aria-label="切换菜单" aria-expanded="false">
+            <button class="nav-toggle" id="navToggle" aria-label="切换菜单">
                 <i class="fas fa-bars"></i>
             </button>
-            <ul class="nav-menu" id="navMenu" role="menubar">
-                <li role="none"><a href="#home" role="menuitem" class="active">首页</a></li>
-                <li role="none"><a href="#downloads" role="menuitem">资源下载</a></li>
-                <li role="none"><a href="#install" role="menuitem">安装指南</a></li>
-                <li role="none"><a href="#downloads" role="menuitem" class="nav-admin-btn" id="adminToggleBtn"><i class="fas fa-user-shield"></i> 管理</a></li>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="active">首页</a></li>
+                <li><a href="#downloads">资源下载</a></li>
+                <li><a href="#install">安装指南</a></li>
+                <li><a href="#downloads" class="nav-admin-btn" id="adminToggleBtn"><i class="fas fa-user-shield"></i> 管理</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- ===== Hero 区 ===== -->
+    <!-- ===== Hero 区（无头像） ===== -->
     <section class="hero" id="home">
         <div class="container">
-            <div class="hero-avatar" role="img" aria-label="裕能跨境电商">裕</div>
             <h1>裕能跨境电商</h1>
             <div class="subtitle">
                 <i class="fas fa-cube"></i>
@@ -986,9 +838,7 @@
         <div class="container">
             <h2 class="section-title"><i class="fas fa-cloud-download-alt"></i>资源下载</h2>
             <p class="section-sub">点击下载按钮获取工具，管理员可上传或编辑资源介绍</p>
-            <div class="file-grid" id="fileGrid">
-                <!-- 由 JavaScript 动态渲染 -->
-            </div>
+            <div class="file-grid" id="fileGrid"></div>
             <div class="admin-add-wrapper" id="adminAddWrapper">
                 <button class="btn-add-file" id="openAddModalBtn"><i class="fas fa-plus-circle"></i> 上传新资源</button>
             </div>
@@ -999,9 +849,10 @@
     <section class="install-guide" id="install">
         <div class="container">
             <h2 class="section-title"><i class="fas fa-tools"></i>安装方式</h2>
-            <p class="section-sub">按照以下步骤完成工具安装，管理员可编辑安装说明</p>
-            <div class="install-grid" id="installGrid">
-                <!-- 由 JavaScript 动态渲染 -->
+            <p class="section-sub">按照以下步骤完成工具安装，管理员可增删或编辑安装说明</p>
+            <div class="install-grid" id="installGrid"></div>
+            <div class="admin-add-install-wrapper" id="adminAddInstallWrapper">
+                <button class="btn-add-install" id="openAddInstallModalBtn"><i class="fas fa-plus-circle"></i> 添加安装指南</button>
             </div>
         </div>
     </section>
@@ -1020,18 +871,16 @@
         </div>
     </footer>
 
-    <!-- ===== 模态框 (文件编辑/新增) ===== -->
+    <!-- ===== 模态框：文件 ===== -->
     <div class="modal-overlay" id="fileModal">
         <div class="modal-box">
-            <h2 id="modalTitle"><i class="fas fa-edit"></i> 编辑资源</h2>
+            <h2 id="fileModalTitle"><i class="fas fa-edit"></i> 编辑资源</h2>
             <form id="fileForm" autocomplete="off">
-                <input type="hidden" id="editIndex" value="-1" />
-
+                <input type="hidden" id="fileEditIndex" value="-1" />
                 <div class="form-group">
                     <label for="fileName">资源名称 *</label>
                     <input type="text" id="fileName" placeholder="例如：Shopee 运营助手" required />
                 </div>
-
                 <div class="form-row">
                     <div class="form-group">
                         <label for="fileVersion">版本</label>
@@ -1042,12 +891,10 @@
                         <input type="text" id="fileSize" placeholder="12.5 MB" />
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label for="fileDesc">详细介绍 *</label>
                     <textarea id="fileDesc" placeholder="请描述工具功能、适用场景…" required></textarea>
                 </div>
-
                 <div class="form-row">
                     <div class="form-group">
                         <label for="fileIcon">图标 (FontAwesome类名)</label>
@@ -1058,56 +905,53 @@
                         <input type="text" id="fileExt" placeholder="EXE / ZIP / CRX" />
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label for="fileUpload">上传文件 (模拟)</label>
                     <input type="file" id="fileUpload" />
                     <small style="color:#718096; font-size:0.8rem;">选择文件仅用于模拟，实际将存储元数据</small>
                 </div>
-
                 <div class="modal-actions">
-                    <button type="button" class="btn-modal-cancel" id="modalCancelBtn">取消</button>
-                    <button type="submit" class="btn-modal-save" id="modalSaveBtn"><i class="fas fa-save"></i> 保存</button>
+                    <button type="button" class="btn-modal-cancel" id="fileModalCancel">取消</button>
+                    <button type="submit" class="btn-modal-save"><i class="fas fa-save"></i> 保存</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- ===== 模态框 (安装指南编辑) ===== -->
+    <!-- ===== 模态框：安装指南 ===== -->
     <div class="modal-overlay" id="installModal">
         <div class="modal-box">
             <h2 id="installModalTitle"><i class="fas fa-edit"></i> 编辑安装说明</h2>
             <form id="installForm" autocomplete="off">
                 <input type="hidden" id="installEditIndex" value="-1" />
-
                 <div class="form-group">
                     <label for="installTitle">标题 *</label>
                     <input type="text" id="installTitle" placeholder="例如：通用 EXE 安装包" required />
                 </div>
-
                 <div class="form-group">
                     <label for="installSteps">步骤 (每行一个步骤) *</label>
                     <textarea id="installSteps" rows="6" placeholder="1. 下载文件&#10;2. 双击运行&#10;3. 完成安装" required></textarea>
                 </div>
-
                 <div class="modal-actions">
-                    <button type="button" class="btn-modal-cancel" id="installModalCancelBtn">取消</button>
-                    <button type="submit" class="btn-modal-save" id="installModalSaveBtn"><i class="fas fa-save"></i> 保存</button>
+                    <button type="button" class="btn-modal-cancel" id="installModalCancel">取消</button>
+                    <button type="submit" class="btn-modal-save"><i class="fas fa-save"></i> 保存</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- ===== JavaScript ===== -->
+    <!-- ============================================================ -->
+    <!-- JavaScript -->
+    <!-- ============================================================ -->
     <script>
         (function() {
             'use strict';
 
-            // ============================================================
-            // 1. 数据层 – 文件资源
-            // ============================================================
-            const FILE_STORAGE_KEY = 'yune_cb_files';
-            const DEFAULT_FILES = [{
+            // ---------- 数据 ----------
+            const FILE_STORAGE = 'yune_cb_files';
+            const INSTALL_STORAGE = 'yune_cb_install';
+
+            const defaultFiles = [{
                 name: '裕能Shopee运营助手',
                 version: 'v2.0.1',
                 desc: '一站式Shopee店铺管理工具，支持订单同步、库存预警、数据看板，大幅提升运营效率。',
@@ -1133,11 +977,7 @@
                 fileName: '多语言翻译插件_v1.0.2.crx'
             }];
 
-            // ============================================================
-            // 2. 数据层 – 安装指南
-            // ============================================================
-            const INSTALL_STORAGE_KEY = 'yune_cb_install';
-            const DEFAULT_INSTALL = [{
+            const defaultInstall = [{
                 title: '通用 EXE 安装包',
                 icon: 'fa-cube',
                 steps: [
@@ -1166,61 +1006,54 @@
                 ]
             }];
 
-            // ============================================================
-            // 3. 全局状态
-            // ============================================================
+            // 状态
             let files = [];
-            let installData = [];
+            let installs = [];
             let isAdmin = false;
 
-            // ============================================================
-            // 4. DOM 引用
-            // ============================================================
+            // DOM 引用
             const fileGrid = document.getElementById('fileGrid');
             const installGrid = document.getElementById('installGrid');
             const adminToggleBtn = document.getElementById('adminToggleBtn');
             const adminAddWrapper = document.getElementById('adminAddWrapper');
+            const adminAddInstallWrapper = document.getElementById('adminAddInstallWrapper');
 
             // 文件模态框
             const fileModal = document.getElementById('fileModal');
-            const fileModalTitle = document.getElementById('modalTitle');
-            const fileEditIndex = document.getElementById('editIndex');
+            const fileModalTitle = document.getElementById('fileModalTitle');
+            const fileEditIndex = document.getElementById('fileEditIndex');
             const fileForm = document.getElementById('fileForm');
-            const fileNameInput = document.getElementById('fileName');
-            const fileVersionInput = document.getElementById('fileVersion');
-            const fileSizeInput = document.getElementById('fileSize');
-            const fileDescInput = document.getElementById('fileDesc');
-            const fileIconInput = document.getElementById('fileIcon');
-            const fileExtInput = document.getElementById('fileExt');
-            const fileUploadInput = document.getElementById('fileUpload');
-            const fileModalCancel = document.getElementById('modalCancelBtn');
-            const openAddModalBtn = document.getElementById('openAddModalBtn');
+            const fileName = document.getElementById('fileName');
+            const fileVersion = document.getElementById('fileVersion');
+            const fileSize = document.getElementById('fileSize');
+            const fileDesc = document.getElementById('fileDesc');
+            const fileIcon = document.getElementById('fileIcon');
+            const fileExt = document.getElementById('fileExt');
+            const fileUpload = document.getElementById('fileUpload');
+            const fileModalCancel = document.getElementById('fileModalCancel');
+            const openAddFileBtn = document.getElementById('openAddModalBtn');
 
             // 安装模态框
             const installModal = document.getElementById('installModal');
             const installModalTitle = document.getElementById('installModalTitle');
             const installEditIndex = document.getElementById('installEditIndex');
             const installForm = document.getElementById('installForm');
-            const installTitleInput = document.getElementById('installTitle');
-            const installStepsInput = document.getElementById('installSteps');
-            const installModalCancel = document.getElementById('installModalCancelBtn');
+            const installTitle = document.getElementById('installTitle');
+            const installSteps = document.getElementById('installSteps');
+            const installModalCancel = document.getElementById('installModalCancel');
+            const openAddInstallBtn = document.getElementById('openAddInstallModalBtn');
 
-            // ============================================================
-            // 5. 工具函数
-            // ============================================================
-            function loadFiles() {
-                const stored = localStorage.getItem(FILE_STORAGE_KEY);
-                if (stored) {
+            // ---------- 工具 ----------
+            function loadData() {
+                // 文件
+                const storedFiles = localStorage.getItem(FILE_STORAGE);
+                if (storedFiles) {
                     try {
-                        files = JSON.parse(stored);
-                        if (!Array.isArray(files) || files.length === 0) {
-                            files = JSON.parse(JSON.stringify(DEFAULT_FILES));
-                        }
-                    } catch (e) {
-                        files = JSON.parse(JSON.stringify(DEFAULT_FILES));
-                    }
+                        files = JSON.parse(storedFiles);
+                        if (!Array.isArray(files) || files.length === 0) files = JSON.parse(JSON.stringify(defaultFiles));
+                    } catch { files = JSON.parse(JSON.stringify(defaultFiles)); }
                 } else {
-                    files = JSON.parse(JSON.stringify(DEFAULT_FILES));
+                    files = JSON.parse(JSON.stringify(defaultFiles));
                 }
                 files.forEach(f => {
                     if (!f.fileName) {
@@ -1228,80 +1061,62 @@
                     }
                 });
                 saveFiles();
-            }
 
-            function saveFiles() {
-                localStorage.setItem(FILE_STORAGE_KEY, JSON.stringify(files));
-            }
-
-            function loadInstall() {
-                const stored = localStorage.getItem(INSTALL_STORAGE_KEY);
-                if (stored) {
+                // 安装
+                const storedInstall = localStorage.getItem(INSTALL_STORAGE);
+                if (storedInstall) {
                     try {
-                        installData = JSON.parse(stored);
-                        if (!Array.isArray(installData) || installData.length === 0) {
-                            installData = JSON.parse(JSON.stringify(DEFAULT_INSTALL));
-                        }
-                    } catch (e) {
-                        installData = JSON.parse(JSON.stringify(DEFAULT_INSTALL));
-                    }
+                        installs = JSON.parse(storedInstall);
+                        if (!Array.isArray(installs) || installs.length === 0) installs = JSON.parse(JSON.stringify(
+                            defaultInstall));
+                    } catch { installs = JSON.parse(JSON.stringify(defaultInstall)); }
                 } else {
-                    installData = JSON.parse(JSON.stringify(DEFAULT_INSTALL));
+                    installs = JSON.parse(JSON.stringify(defaultInstall));
                 }
                 saveInstall();
             }
 
+            function saveFiles() {
+                localStorage.setItem(FILE_STORAGE, JSON.stringify(files));
+            }
+
             function saveInstall() {
-                localStorage.setItem(INSTALL_STORAGE_KEY, JSON.stringify(installData));
+                localStorage.setItem(INSTALL_STORAGE, JSON.stringify(installs));
             }
 
             function escapeHtml(text) {
                 if (!text) return '';
-                const map = {
-                    '&': '&amp;',
-                    '<': '&lt;',
-                    '>': '&gt;',
-                    '"': '&quot;',
-                    "'": '&#039;'
-                };
-                return String(text).replace(/[&<>"']/g, function(m) { return map[m]; });
+                const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+                return String(text).replace(/[&<>"']/g, m => map[m]);
             }
 
-            // ============================================================
-            // 6. 渲染函数 – 文件
-            // ============================================================
+            // ---------- 渲染 ----------
             function renderFiles() {
                 if (files.length === 0) {
-                    fileGrid.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fas fa-inbox"></i>
-                            <p>暂无资源，点击「上传新资源」添加。</p>
-                        </div>
-                    `;
+                    fileGrid.innerHTML =
+                        `<div class="empty-state"><i class="fas fa-inbox"></i><p>暂无资源，点击「上传新资源」添加。</p></div>`;
                     return;
                 }
-
                 let html = '';
-                files.forEach((file, index) => {
-                    const iconClass = file.icon || 'fa-file';
+                files.forEach((f, idx) => {
                     html += `
-                        <div class="file-card" data-index="${index}">
-                            <div class="file-icon"><i class="fas ${iconClass}"></i></div>
-                            <h3>${escapeHtml(file.name)}</h3>
-                            <span class="file-version">${escapeHtml(file.version || 'v1.0')}</span>
-                            <p class="file-desc">${escapeHtml(file.desc || '暂无描述')}</p>
+                        <div class="file-card" data-index="${idx}">
+                            <div class="file-icon"><i class="fas ${f.icon || 'fa-file'}"></i></div>
+                            <h3>${escapeHtml(f.name)}</h3>
+                            <span class="file-version">${escapeHtml(f.version || 'v1.0')}</span>
+                            <p class="file-desc">${escapeHtml(f.desc || '暂无描述')}</p>
                             <div class="file-meta">
-                                <span><i class="fas fa-file"></i> ${escapeHtml(file.ext || '文件')}</span>
-                                <span><i class="fas fa-weight-hanging"></i> ${escapeHtml(file.size || '未知')}</span>
+                                <span><i class="fas fa-file"></i> ${escapeHtml(f.ext || '文件')}</span>
+                                <span><i class="fas fa-weight-hanging"></i> ${escapeHtml(f.size || '未知')}</span>
                                 <span><i class="fas fa-calendar-alt"></i> 2026-09-07</span>
                             </div>
-                            <button class="btn-download" data-filename="${escapeHtml(file.fileName || file.name)}">
+                            <button class="btn-download" data-filename="${escapeHtml(f.fileName || f.name)}">
                                 <span class="btn-text"><i class="fas fa-download"></i> 下载</span>
                                 <span class="spinner"></span>
                             </button>
                             <div class="admin-controls ${isAdmin ? 'show' : ''}">
-                                <button class="btn-edit-file" data-index="${index}"><i class="fas fa-pen"></i> 编辑</button>
-                                <button class="btn-delete-file" data-index="${index}"><i class="fas fa-trash"></i> 删除</button>
+                                <button class="btn-edit-file" data-index="${idx}"><i class="fas fa-pen"></i> 编辑</button>
+                                <button class="btn-delete-file" data-index="${idx}"><i class="fas fa-trash"></i> 删除</button>
                             </div>
                         </div>
                     `;
@@ -1313,20 +1128,20 @@
                     btn.addEventListener('click', function(e) {
                         e.preventDefault();
                         if (this.classList.contains('loading')) return;
-                        const fileName = this.getAttribute('data-filename') || 'file.bin';
+                        const fn = this.getAttribute('data-filename') || 'file.bin';
                         this.classList.add('loading');
                         const delay = 1800 + Math.random() * 1400;
                         const that = this;
                         setTimeout(() => {
                             try {
                                 const blob = new Blob(
-                                    ['裕能跨境电商资源: ' + fileName + '\n下载时间: ' + new Date().toLocaleString()],
+                                    ['裕能跨境电商资源: ' + fn + '\n下载时间: ' + new Date().toLocaleString()],
                                     { type: 'application/octet-stream' }
                                 );
                                 const url = URL.createObjectURL(blob);
                                 const link = document.createElement('a');
                                 link.href = url;
-                                link.download = fileName;
+                                link.download = fn;
                                 document.body.appendChild(link);
                                 link.click();
                                 document.body.removeChild(link);
@@ -1335,28 +1150,26 @@
                                 window.open('#', '_blank');
                             }
                             that.classList.remove('loading');
-                            const textSpan = that.querySelector('.btn-text');
-                            if (textSpan) {
-                                textSpan.innerHTML = '<i class="fas fa-check"></i> 已下载';
-                                setTimeout(() => {
-                                    textSpan.innerHTML = '<i class="fas fa-download"></i> 下载';
-                                }, 2500);
+                            const txt = that.querySelector('.btn-text');
+                            if (txt) {
+                                txt.innerHTML = '<i class="fas fa-check"></i> 已下载';
+                                setTimeout(() => { txt.innerHTML = '<i class="fas fa-download"></i> 下载'; }, 2500);
                             }
                         }, delay);
                     });
                 });
 
-                // 文件管理按钮
+                // 编辑/删除
                 document.querySelectorAll('.btn-edit-file').forEach(btn => {
                     btn.addEventListener('click', function() {
-                        const idx = parseInt(this.getAttribute('data-index'), 10);
+                        const idx = parseInt(this.dataset.index, 10);
                         openFileModal('编辑资源', idx);
                     });
                 });
                 document.querySelectorAll('.btn-delete-file').forEach(btn => {
                     btn.addEventListener('click', function() {
-                        const idx = parseInt(this.getAttribute('data-index'), 10);
-                        if (confirm(`确定要删除「${files[idx].name}」吗？`)) {
+                        const idx = parseInt(this.dataset.index, 10);
+                        if (confirm(`确定删除「${files[idx].name}」？`)) {
                             files.splice(idx, 1);
                             saveFiles();
                             renderFiles();
@@ -1367,51 +1180,54 @@
                 adminAddWrapper.classList.toggle('show', isAdmin);
             }
 
-            // ============================================================
-            // 7. 渲染函数 – 安装指南
-            // ============================================================
             function renderInstall() {
-                if (installData.length === 0) {
-                    installGrid.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fas fa-info-circle"></i>
-                            <p>暂无安装指南，请管理员添加。</p>
-                        </div>
-                    `;
+                if (installs.length === 0) {
+                    installGrid.innerHTML =
+                        `<div class="empty-state"><i class="fas fa-info-circle"></i><p>暂无安装指南，请管理员添加。</p></div>`;
                     return;
                 }
-
                 let html = '';
-                installData.forEach((item, index) => {
-                    const icon = item.icon || 'fa-cube';
-                    const stepsHtml = item.steps.map(step => `<li>${step}</li>`).join('');
+                installs.forEach((item, idx) => {
+                    const stepsHtml = item.steps.map(s => `<li>${s}</li>`).join('');
                     html += `
-                        <div class="install-card" data-install-index="${index}">
-                            <h4><i class="fas ${icon}"></i> ${escapeHtml(item.title)}</h4>
+                        <div class="install-card" data-index="${idx}">
+                            <h4><i class="fas ${item.icon || 'fa-cube'}"></i> ${escapeHtml(item.title)}</h4>
                             <ol>${stepsHtml}</ol>
                             <div class="install-admin-controls ${isAdmin ? 'show' : ''}">
-                                <button class="btn-edit-install" data-index="${index}"><i class="fas fa-pen"></i> 编辑</button>
+                                <button class="btn-edit-install" data-index="${idx}"><i class="fas fa-pen"></i> 编辑</button>
+                                <button class="btn-delete-install" data-index="${idx}"><i class="fas fa-trash"></i> 删除</button>
                             </div>
                         </div>
                     `;
                 });
                 installGrid.innerHTML = html;
 
-                // 绑定安装编辑按钮
+                // 编辑
                 document.querySelectorAll('.btn-edit-install').forEach(btn => {
                     btn.addEventListener('click', function() {
-                        const idx = parseInt(this.getAttribute('data-index'), 10);
+                        const idx = parseInt(this.dataset.index, 10);
                         openInstallModal('编辑安装说明', idx);
                     });
                 });
+                // 删除
+                document.querySelectorAll('.btn-delete-install').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const idx = parseInt(this.dataset.index, 10);
+                        if (confirm(`确定删除「${installs[idx].title}」？`)) {
+                            installs.splice(idx, 1);
+                            saveInstall();
+                            renderInstall();
+                        }
+                    });
+                });
+
+                adminAddInstallWrapper.classList.toggle('show', isAdmin);
             }
 
-            // ============================================================
-            // 8. 管理员切换 (密码: yuneng)
-            // ============================================================
+            // ---------- 管理员 ----------
             function toggleAdmin() {
                 if (!isAdmin) {
-                    const pwd = prompt('请输入管理员密码');
+                    const pwd = prompt('请输入管理员密码 (默认: yuneng)');
                     if (pwd === 'yuneng') {
                         isAdmin = true;
                         adminToggleBtn.classList.add('admin-active');
@@ -1429,159 +1245,125 @@
                     renderInstall();
                 }
             }
-
             adminToggleBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 toggleAdmin();
             });
 
-            // ============================================================
-            // 9. 文件模态框
-            // ============================================================
+            // ---------- 文件模态框 ----------
             function openFileModal(title, index) {
                 fileModalTitle.textContent = title;
                 fileEditIndex.value = index;
                 if (index >= 0 && index < files.length) {
                     const f = files[index];
-                    fileNameInput.value = f.name || '';
-                    fileVersionInput.value = f.version || '';
-                    fileSizeInput.value = f.size || '';
-                    fileDescInput.value = f.desc || '';
-                    fileIconInput.value = f.icon || 'fa-file';
-                    fileExtInput.value = f.ext || '';
+                    fileName.value = f.name || '';
+                    fileVersion.value = f.version || '';
+                    fileSize.value = f.size || '';
+                    fileDesc.value = f.desc || '';
+                    fileIcon.value = f.icon || 'fa-file';
+                    fileExt.value = f.ext || '';
                 } else {
-                    fileNameInput.value = '';
-                    fileVersionInput.value = '';
-                    fileSizeInput.value = '';
-                    fileDescInput.value = '';
-                    fileIconInput.value = 'fa-file';
-                    fileExtInput.value = '';
+                    fileName.value = '';
+                    fileVersion.value = '';
+                    fileSize.value = '';
+                    fileDesc.value = '';
+                    fileIcon.value = 'fa-file';
+                    fileExt.value = '';
                 }
-                fileUploadInput.value = '';
+                fileUpload.value = '';
                 fileModal.classList.add('active');
             }
-
-            function closeFileModal() {
-                fileModal.classList.remove('active');
-            }
-
+            function closeFileModal() { fileModal.classList.remove('active'); }
             fileModalCancel.addEventListener('click', closeFileModal);
-            fileModal.addEventListener('click', function(e) {
-                if (e.target === fileModal) closeFileModal();
-            });
+            fileModal.addEventListener('click', function(e) { if (e.target === fileModal) closeFileModal(); });
 
             fileForm.addEventListener('submit', function(e) {
                 e.preventDefault();
-                const name = fileNameInput.value.trim();
-                const desc = fileDescInput.value.trim();
-                if (!name || !desc) {
-                    alert('请填写资源名称和详细介绍');
-                    return;
-                }
-
-                const index = parseInt(fileEditIndex.value, 10);
+                const name = fileName.value.trim();
+                const desc = fileDesc.value.trim();
+                if (!name || !desc) { alert('请填写资源名称和详细介绍'); return; }
+                const idx = parseInt(fileEditIndex.value, 10);
                 const newFile = {
                     name: name,
-                    version: fileVersionInput.value.trim() || 'v1.0',
+                    version: fileVersion.value.trim() || 'v1.0',
                     desc: desc,
-                    size: fileSizeInput.value.trim() || '未知',
-                    icon: fileIconInput.value.trim() || 'fa-file',
-                    ext: fileExtInput.value.trim() || '文件',
-                    fileName: name.replace(/\s/g, '_') + '_' + (fileVersionInput.value.trim() || 'v1.0') + '.' + (fileExtInput
-                        .value.trim() || 'bin')
+                    size: fileSize.value.trim() || '未知',
+                    icon: fileIcon.value.trim() || 'fa-file',
+                    ext: fileExt.value.trim() || '文件',
+                    fileName: name.replace(/\s/g, '_') + '_' + (fileVersion.value.trim() || 'v1.0') + '.' + (fileExt.value
+                        .trim() || 'bin')
                 };
-
-                if (fileUploadInput.files.length > 0) {
-                    const uploaded = fileUploadInput.files[0];
-                    newFile.fileName = uploaded.name;
-                    if (!fileSizeInput.value.trim()) {
-                        const sizeMB = (uploaded.size / (1024 * 1024)).toFixed(1);
-                        newFile.size = sizeMB + ' MB';
+                if (fileUpload.files.length > 0) {
+                    const up = fileUpload.files[0];
+                    newFile.fileName = up.name;
+                    if (!fileSize.value.trim()) {
+                        newFile.size = (up.size / (1024 * 1024)).toFixed(1) + ' MB';
                     }
-                    if (!fileExtInput.value.trim()) {
-                        const ext = uploaded.name.split('.').pop().toUpperCase();
-                        newFile.ext = ext + ' 文件';
+                    if (!fileExt.value.trim()) {
+                        newFile.ext = up.name.split('.').pop().toUpperCase() + ' 文件';
                     }
                 }
-
-                if (index >= 0 && index < files.length) {
-                    files[index] = newFile;
+                if (idx >= 0 && idx < files.length) {
+                    files[idx] = newFile;
                 } else {
                     files.push(newFile);
                 }
-
                 saveFiles();
                 renderFiles();
                 closeFileModal();
             });
 
-            openAddModalBtn.addEventListener('click', function() {
+            openAddFileBtn.addEventListener('click', function() {
                 openFileModal('上传新资源', -1);
             });
 
-            // ============================================================
-            // 10. 安装模态框
-            // ============================================================
+            // ---------- 安装模态框 ----------
             function openInstallModal(title, index) {
                 installModalTitle.textContent = title;
                 installEditIndex.value = index;
-                if (index >= 0 && index < installData.length) {
-                    const item = installData[index];
-                    installTitleInput.value = item.title || '';
-                    installStepsInput.value = item.steps ? item.steps.join('\n') : '';
+                if (index >= 0 && index < installs.length) {
+                    const item = installs[index];
+                    installTitle.value = item.title || '';
+                    installSteps.value = item.steps ? item.steps.join('\n') : '';
                 } else {
-                    installTitleInput.value = '';
-                    installStepsInput.value = '';
+                    installTitle.value = '';
+                    installSteps.value = '';
                 }
                 installModal.classList.add('active');
             }
-
-            function closeInstallModal() {
-                installModal.classList.remove('active');
-            }
-
+            function closeInstallModal() { installModal.classList.remove('active'); }
             installModalCancel.addEventListener('click', closeInstallModal);
-            installModal.addEventListener('click', function(e) {
-                if (e.target === installModal) closeInstallModal();
-            });
+            installModal.addEventListener('click', function(e) { if (e.target === installModal) closeInstallModal(); });
 
             installForm.addEventListener('submit', function(e) {
                 e.preventDefault();
-                const title = installTitleInput.value.trim();
-                const stepsRaw = installStepsInput.value.trim();
-                if (!title || !stepsRaw) {
-                    alert('请填写标题和步骤');
-                    return;
-                }
+                const title = installTitle.value.trim();
+                const stepsRaw = installSteps.value.trim();
+                if (!title || !stepsRaw) { alert('请填写标题和步骤'); return; }
                 const steps = stepsRaw.split('\n').filter(s => s.trim() !== '');
-                if (steps.length === 0) {
-                    alert('请至少填写一个步骤');
-                    return;
-                }
-
-                const index = parseInt(installEditIndex.value, 10);
+                if (steps.length === 0) { alert('请至少填写一个步骤'); return; }
+                const idx = parseInt(installEditIndex.value, 10);
                 const newItem = {
                     title: title,
-                    icon: 'fa-cube', // 保留默认图标，可后续扩展
+                    icon: 'fa-cube',
                     steps: steps
                 };
-
-                if (index >= 0 && index < installData.length) {
-                    installData[index] = newItem;
+                if (idx >= 0 && idx < installs.length) {
+                    installs[idx] = newItem;
                 } else {
-                    installData.push(newItem);
+                    installs.push(newItem);
                 }
-
                 saveInstall();
                 renderInstall();
                 closeInstallModal();
             });
 
-            // ============================================================
-            // 11. 初始化 & 其他
-            // ============================================================
-            loadFiles();
-            loadInstall();
+            openAddInstallBtn.addEventListener('click', function() {
+                openInstallModal('添加安装指南', -1);
+            });
+
+            // ---------- 初始化 ----------
+            loadData();
             renderFiles();
             renderInstall();
 
@@ -1602,7 +1384,6 @@
                     if (link.getAttribute('href') === '#' + currentId) link.classList.add('active');
                 });
             }
-
             window.addEventListener('scroll', function() {
                 requestAnimationFrame(updateActiveLink);
             });
