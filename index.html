@@ -1,1432 +1,1112 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>裕能跨境电商 · 内部资源管理</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <style>
-        /* ===== 全局重置 ===== */
+        <html lang="zh-CN">
+        <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>裕能跨境电商 · 内部资源</title>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+            <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        html {
-            scroll-behavior: smooth;
-        }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: #f7fafc;
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #f7fafc;
             color: #2d3748;
-            line-height: 1.6;
             padding-top: 64px;
-        }
-        a {
-            text-decoration: none;
-            color: inherit;
+            line-height: 1.6;
         }
         .container {
             max-width: 1140px;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 20px;
         }
-
-        /* ===== 导航栏 ===== */
         .navbar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            z-index: 1000;
+            height: 64px;
             background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            height: 64px;
             display: flex;
             align-items: center;
-            transition: box-shadow 0.3s;
-        }
-        .navbar.scrolled {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            z-index: 999;
         }
         .navbar .container {
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
             width: 100%;
         }
         .nav-brand {
             font-weight: 700;
-            font-size: 1.25rem;
-            color: #2d3748;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-size: 1.2rem;
         }
         .nav-brand i {
             color: #4A90D9;
-            font-size: 1.4rem;
         }
         .nav-brand span {
             color: #4A90D9;
         }
-        .nav-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 6px;
-            transition: background 0.2s;
-        }
-        .nav-toggle:hover {
-            background: rgba(0, 0, 0, 0.04);
-        }
         .nav-menu {
             display: flex;
+            gap: 12px;
             list-style: none;
-            gap: 8px;
-            align-items: center;
         }
-        .nav-menu li a {
-            display: inline-block;
-            padding: 8px 16px;
+        .nav-menu a {
+            padding: 6px 14px;
             border-radius: 8px;
-            font-size: 0.95rem;
-            font-weight: 500;
+            text-decoration: none;
             color: #4a5568;
-            transition: all 0.2s;
-            position: relative;
+            font-weight: 500;
+            transition: .2s;
         }
-        .nav-menu li a::after {
-            content: '';
-            position: absolute;
-            bottom: 2px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 2px;
-            background: #4A90D9;
-            border-radius: 2px;
-            transition: width 0.25s;
-        }
-        .nav-menu li a:hover {
-            color: #4A90D9;
-            background: rgba(74, 144, 217, 0.06);
-        }
-        .nav-menu li a:hover::after {
-            width: 60%;
-        }
-        .nav-menu li a.active {
-            color: #4A90D9;
+        .nav-menu a:hover {
             background: rgba(74, 144, 217, 0.08);
+            color: #4A90D9;
         }
-        .nav-menu li a.active::after {
-            width: 60%;
-        }
-        .nav-admin-btn {
+        .nav-menu .admin-btn {
             background: #4A90D9;
             color: #fff !important;
-            border-radius: 20px !important;
-            padding: 6px 18px !important;
-            font-weight: 600 !important;
+            border-radius: 20px;
+            padding: 6px 18px;
         }
-        .nav-admin-btn::after {
-            display: none !important;
+        .nav-menu .admin-btn:hover {
+            background: #357ABD;
         }
-        .nav-admin-btn:hover {
-            background: #357ABD !important;
-            color: #fff !important;
-            transform: scale(1.04);
+        .nav-menu .admin-btn.active {
+            background: #e53e3e;
         }
-        .nav-admin-btn.admin-active {
-            background: #e53e3e !important;
+        .nav-menu .admin-btn.active:hover {
+            background: #c53030;
         }
-        .nav-admin-btn.admin-active:hover {
-            background: #c53030 !important;
-        }
-
-        /* ===== Hero 区 (无头像) ===== */
         .hero {
-            padding: 60px 0 50px;
-            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
             text-align: center;
+            padding: 50px 0 40px;
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
             border-bottom: 1px solid rgba(0, 0, 0, 0.04);
         }
         .hero h1 {
-            font-size: 2.8rem;
+            font-size: 2.6rem;
             font-weight: 700;
-            color: #1a202c;
-            letter-spacing: -0.5px;
-            margin-bottom: 6px;
         }
-        .hero .subtitle {
-            font-size: 1.15rem;
+        .hero .sub {
             color: #4A90D9;
             font-weight: 500;
-            margin-bottom: 12px;
+            font-size: 1.1rem;
         }
-        .hero .subtitle i {
-            margin: 0 6px;
-            opacity: 0.5;
-            font-size: 0.7rem;
-            vertical-align: middle;
-        }
-        .hero .bio {
-            max-width: 580px;
-            margin: 0 auto;
+        .hero p {
+            max-width: 520px;
+            margin: 10px auto 0;
             color: #4a5568;
-            font-size: 1rem;
-            line-height: 1.7;
         }
-        .hero .bio strong {
-            color: #2d3748;
-        }
-
-        /* ===== 通用标题 ===== */
         .section-title {
             text-align: center;
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 700;
-            color: #1a202c;
             margin-bottom: 8px;
-            letter-spacing: -0.3px;
+        }
+        .section-title i {
+            color: #4A90D9;
+            margin-right: 8px;
         }
         .section-sub {
             text-align: center;
             color: #718096;
-            font-size: 1rem;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
-
-        /* ===== 下载中心 ===== */
         .downloads {
-            padding: 60px 0 50px;
-            background: #ffffff;
+            background: #fff;
+            padding: 50px 0;
         }
-        .downloads .section-title i {
+        .category-group {
+            margin-bottom: 36px;
+        }
+        .category-group h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .category-group h3 i {
             color: #4A90D9;
-            margin-right: 8px;
         }
         .file-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 28px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
         }
         .file-card {
             background: #f7fafc;
-            border-radius: 16px;
-            padding: 28px 24px 24px;
-            transition: all 0.3s;
+            border-radius: 14px;
+            padding: 24px;
             border: 1px solid rgba(0, 0, 0, 0.04);
             display: flex;
             flex-direction: column;
+            transition: .3s;
         }
         .file-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 16px 48px rgba(74, 144, 217, 0.10);
-            border-color: rgba(74, 144, 217, 0.15);
-            background: #ffffff;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(74, 144, 217, 0.08);
         }
-        .file-icon {
-            font-size: 2.6rem;
+        .file-card .icon {
+            font-size: 2.2rem;
             color: #4A90D9;
-            margin-bottom: 12px;
-            width: 56px;
-            height: 56px;
-            border-radius: 14px;
-            background: rgba(74, 144, 217, 0.10);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            margin-bottom: 8px;
         }
         .file-card h3 {
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: #1a202c;
+            font-size: 1.1rem;
             margin-bottom: 4px;
         }
-        .file-card .file-version {
-            font-size: 0.8rem;
+        .file-card .version {
             color: #4A90D9;
-            font-weight: 500;
             background: rgba(74, 144, 217, 0.08);
             padding: 0 10px;
             border-radius: 12px;
+            font-size: 0.75rem;
             display: inline-block;
             margin-bottom: 8px;
             width: fit-content;
         }
-        .file-card .file-desc {
+        .file-card .desc {
             color: #4a5568;
-            font-size: 0.92rem;
-            line-height: 1.6;
+            font-size: 0.9rem;
             flex: 1;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
-        .file-meta {
+        .file-card .meta {
+            font-size: 0.8rem;
+            color: #718096;
             display: flex;
             gap: 16px;
-            font-size: 0.82rem;
-            color: #718096;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
+            margin-bottom: 14px;
         }
-        .file-meta span {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .file-meta i {
-            color: #4A90D9;
-            width: 16px;
+        .file-card .meta i {
+            width: 18px;
         }
         .btn-download {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
             background: #4A90D9;
             color: #fff;
             border: none;
-            padding: 12px 20px;
+            padding: 10px;
             border-radius: 10px;
-            font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.25s;
+            transition: .25s;
             width: 100%;
-            margin-top: auto;
         }
         .btn-download:hover {
             background: #357ABD;
-            transform: scale(1.01);
-            box-shadow: 0 6px 20px rgba(74, 144, 217, 0.30);
         }
-        .btn-download.loading {
-            opacity: 0.7;
-            pointer-events: none;
-        }
-        .btn-download .spinner {
-            display: none;
-            width: 18px;
-            height: 18px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-        }
-        .btn-download.loading .spinner {
-            display: inline-block;
-        }
-        .btn-download.loading .btn-text {
-            display: none;
-        }
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* ===== 管理员控制（文件） ===== */
         .admin-controls {
             display: none;
             gap: 8px;
-            margin-top: 14px;
-            padding-top: 14px;
-            border-top: 1px dashed rgba(0, 0, 0, 0.08);
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed #ccc;
         }
         .admin-controls.show {
             display: flex;
         }
         .admin-controls button {
             flex: 1;
-            padding: 8px;
+            padding: 6px;
             border: none;
-            border-radius: 8px;
-            font-size: 0.85rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-        .btn-edit-file {
             background: #edf2f7;
-            color: #2d3748;
         }
-        .btn-edit-file:hover {
-            background: #e2e8f0;
-        }
-        .btn-delete-file {
+        .admin-controls .del {
             background: #fff5f5;
             color: #e53e3e;
         }
-        .btn-delete-file:hover {
-            background: #fed7d7;
-        }
-        .btn-add-file {
-            background: #4A90D9;
-            color: #fff;
-            padding: 14px 28px;
-            border: none;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.25s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin: 20px auto 0;
-        }
-        .btn-add-file:hover {
-            background: #357ABD;
-            transform: scale(1.02);
-            box-shadow: 0 6px 20px rgba(74, 144, 217, 0.25);
-        }
-        .admin-add-wrapper {
-            text-align: center;
-            display: none;
-        }
-        .admin-add-wrapper.show {
-            display: block;
-        }
-
-        /* ===== 安装指南 ===== */
         .install-guide {
-            padding: 60px 0 50px;
             background: #f7fafc;
-        }
-        .install-guide .section-title i {
-            color: #4A90D9;
-            margin-right: 8px;
+            padding: 50px 0;
         }
         .install-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 28px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
         }
         .install-card {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 24px 22px 22px;
+            background: #fff;
+            border-radius: 14px;
+            padding: 22px;
             border: 1px solid rgba(0, 0, 0, 0.04);
-            transition: box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
-        }
-        .install-card:hover {
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
-        }
-        .install-card h4 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #1a202c;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
         .install-card h4 i {
             color: #4A90D9;
-            font-size: 1.1rem;
+            margin-right: 6px;
         }
         .install-card ol {
             padding-left: 20px;
-            color: #4a5568;
+            margin-top: 8px;
             font-size: 0.9rem;
-            line-height: 1.8;
-            flex: 1;
-            margin-bottom: 12px;
         }
         .install-card ol li::marker {
             color: #4A90D9;
             font-weight: 600;
         }
-
-        /* 安装卡片管理按钮 */
-        .install-admin-controls {
-            display: none;
-            gap: 8px;
-            margin-top: 8px;
-            padding-top: 14px;
-            border-top: 1px dashed rgba(0, 0, 0, 0.08);
-        }
-        .install-admin-controls.show {
-            display: flex;
-        }
-        .install-admin-controls button {
-            flex: 1;
-            padding: 8px;
-            border: none;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            background: #edf2f7;
-            color: #2d3748;
-        }
-        .install-admin-controls button:hover {
-            background: #e2e8f0;
-        }
-        .install-admin-controls .btn-delete-install {
-            background: #fff5f5;
-            color: #e53e3e;
-        }
-        .install-admin-controls .btn-delete-install:hover {
-            background: #fed7d7;
-        }
-
-        .btn-add-install {
-            background: #4A90D9;
-            color: #fff;
-            padding: 14px 28px;
-            border: none;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.25s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin: 20px auto 0;
-        }
-        .btn-add-install:hover {
-            background: #357ABD;
-            transform: scale(1.02);
-            box-shadow: 0 6px 20px rgba(74, 144, 217, 0.25);
-        }
-        .admin-add-install-wrapper {
+        .admin-add {
             text-align: center;
             display: none;
+            margin-top: 24px;
         }
-        .admin-add-install-wrapper.show {
+        .admin-add.show {
             display: block;
         }
-
-        /* ===== 模态框 ===== */
-        .modal-overlay {
+        .admin-add button {
+            background: #4A90D9;
+            color: #fff;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .admin-add button:hover {
+            background: #357ABD;
+        }
+        .export-wrap {
+            text-align: center;
+            display: none;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px dashed #e2e8f0;
+        }
+        .export-wrap.show {
+            display: block;
+        }
+        .export-wrap button {
+            background: #2d3748;
+            color: #fff;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .export-wrap button:hover {
+            background: #1a202c;
+        }
+        .export-wrap small {
+            display: block;
+            margin-top: 6px;
+            color: #718096;
+        }
+        .modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.45);
-            backdrop-filter: blur(6px);
-            z-index: 2000;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
             justify-content: center;
             align-items: center;
+            z-index: 9999;
             padding: 20px;
         }
-        .modal-overlay.active {
+        .modal.active {
             display: flex;
         }
         .modal-box {
             background: #fff;
-            border-radius: 24px;
-            max-width: 580px;
+            border-radius: 20px;
+            max-width: 520px;
             width: 100%;
-            padding: 32px 28px;
-            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.15);
-            animation: fadeUp 0.3s;
-        }
-        @keyframes fadeUp {
-            from {
-                transform: translateY(30px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            padding: 28px;
+            max-height: 90vh;
+            overflow-y: auto;
         }
         .modal-box h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1a202c;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-size: 1.3rem;
+            margin-bottom: 16px;
         }
-        .modal-box h2 i {
-            color: #4A90D9;
-        }
-        .form-group {
-            margin-bottom: 18px;
-        }
-        .form-group label {
-            display: block;
+        .modal-box label {
             font-weight: 600;
+            display: block;
+            margin: 10px 0 4px;
             font-size: 0.9rem;
-            color: #2d3748;
-            margin-bottom: 4px;
         }
-        .form-group input,
-        .form-group textarea {
+        .modal-box input,
+        .modal-box textarea,
+        .modal-box select {
             width: 100%;
-            padding: 10px 14px;
+            padding: 8px 12px;
             border: 1px solid #e2e8f0;
-            border-radius: 10px;
+            border-radius: 8px;
             font-size: 0.95rem;
-            transition: border 0.2s;
-            background: #f7fafc;
             font-family: inherit;
         }
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #4A90D9;
-            box-shadow: 0 0 0 3px rgba(74, 144, 217, 0.15);
-            background: #fff;
-        }
-        .form-group textarea {
-            min-height: 70px;
+        .modal-box textarea {
+            min-height: 60px;
             resize: vertical;
         }
-        .form-row {
-            display: flex;
-            gap: 16px;
+        .modal-box .file-input-wrapper {
+            margin-top: 4px;
         }
-        .form-row .form-group {
-            flex: 1;
+        .modal-box .file-input-wrapper input[type="file"] {
+            padding: 6px 0;
         }
         .modal-actions {
             display: flex;
-            gap: 12px;
-            margin-top: 24px;
             justify-content: flex-end;
+            gap: 12px;
+            margin-top: 20px;
         }
         .modal-actions button {
-            padding: 10px 28px;
+            padding: 8px 24px;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             font-weight: 600;
-            font-size: 0.95rem;
             cursor: pointer;
-            transition: all 0.25s;
         }
-        .btn-modal-cancel {
+        .modal-actions .cancel {
             background: #edf2f7;
-            color: #4a5568;
         }
-        .btn-modal-cancel:hover {
-            background: #e2e8f0;
-        }
-        .btn-modal-save {
+        .modal-actions .save {
             background: #4A90D9;
             color: #fff;
         }
-        .btn-modal-save:hover {
-            background: #357ABD;
-        }
-
-        /* ===== 页脚 ===== */
         .footer {
             background: #1a202c;
             color: #a0aec0;
-            padding: 28px 0;
             text-align: center;
+            padding: 24px 0;
             font-size: 0.9rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
-        }
-        .footer .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
         }
         .footer .brand {
             color: #fff;
-            font-weight: 600;
-            letter-spacing: 0.5px;
         }
         .footer .brand span {
             color: #4A90D9;
         }
-        .footer .author {
-            color: #718096;
-            font-size: 0.85rem;
+        @media (max-width: 640px) {
+            .nav-menu {
+                flex-wrap: wrap;
+                gap: 4px;
+            }
+            .nav-menu a {
+                padding: 4px 10px;
+                font-size: 0.9rem;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
         }
-        .footer .author i {
-            color: #4A90D9;
-            margin: 0 4px;
-        }
-
-        /* ===== 空状态 ===== */
-        .empty-state {
+        .empty {
             text-align: center;
-            padding: 40px 20px;
-            color: #718096;
+            padding: 30px;
+            color: #a0aec0;
             grid-column: 1 / -1;
         }
-        .empty-state i {
-            font-size: 3rem;
-            color: #cbd5e0;
-            margin-bottom: 12px;
+        .category-actions {
+            display: inline-flex;
+            gap: 8px;
+            margin-left: 16px;
         }
-
-        /* ===== 响应式 ===== */
-        @media (max-width: 768px) {
-            .nav-toggle {
-                display: block;
-            }
-            .nav-menu {
-                position: absolute;
-                top: 64px;
-                left: 0;
-                right: 0;
-                background: rgba(255, 255, 255, 0.98);
-                backdrop-filter: blur(12px);
-                flex-direction: column;
-                padding: 12px 0 18px;
-                gap: 0;
-                border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-                box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
-                transform: translateY(-120%);
-                opacity: 0;
-                transition: all 0.35s;
-                pointer-events: none;
-            }
-            .nav-menu.open {
-                transform: translateY(0);
-                opacity: 1;
-                pointer-events: auto;
-            }
-            .nav-menu li a {
-                display: block;
-                padding: 12px 24px;
-                font-size: 1rem;
-                border-radius: 0;
-                text-align: center;
-            }
-            .nav-menu li a::after {
-                display: none;
-            }
-            .nav-admin-btn {
-                border-radius: 0 !important;
-                background: transparent !important;
-                color: #4a5568 !important;
-                font-weight: 500 !important;
-            }
-            .nav-admin-btn:hover {
-                background: rgba(74, 144, 217, 0.06) !important;
-                transform: none !important;
-            }
-            .nav-admin-btn.admin-active {
-                color: #e53e3e !important;
-                background: transparent !important;
-            }
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            .hero .subtitle {
-                font-size: 1rem;
-            }
-            .hero .bio {
-                font-size: 0.95rem;
-                padding: 0 8px;
-            }
-            .section-title {
-                font-size: 1.6rem;
-            }
-            .file-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            .install-grid {
-                grid-template-columns: 1fr;
-                gap: 18px;
-            }
-            .form-row {
-                flex-direction: column;
-                gap: 0;
-            }
-            .modal-box {
-                padding: 24px 18px;
-            }
+        .category-actions button {
+            background: none;
+            border: none;
+            color: #4A90D9;
+            cursor: pointer;
+            font-size: 0.85rem;
+            padding: 0 4px;
         }
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 16px;
-            }
-            .hero {
-                padding: 40px 0 32px;
-            }
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-            .hero .subtitle {
-                font-size: 0.9rem;
-            }
-            .file-card {
-                padding: 20px 16px 18px;
-            }
-            .btn-download {
-                font-size: 0.9rem;
-                padding: 10px 16px;
-            }
-            .section-title {
-                font-size: 1.4rem;
-            }
-            .nav-brand {
-                font-size: 1.05rem;
-            }
+        .category-actions button:hover {
+            text-decoration: underline;
         }
-        @media (min-width: 1200px) {
-            .file-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            .install-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
+        .file-badge {
+            font-size: 0.7rem;
+            background: #4A90D9;
+            color: #fff;
+            padding: 0 8px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-left: 6px;
         }
     </style>
-</head>
-<body>
-
-    <!-- ===== 导航栏 ===== -->
-    <nav class="navbar" id="navbar">
+        </head>
+        <body>
+    <nav class="navbar">
         <div class="container">
-            <div class="nav-brand">
-                <i class="fas fa-cube"></i>
-                裕能<span>跨境</span>
-            </div>
-            <button class="nav-toggle" id="navToggle" aria-label="切换菜单">
-                <i class="fas fa-bars"></i>
-            </button>
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="#home" class="active">首页</a></li>
+            <div class="nav-brand"><i class="fas fa-cube"></i> 裕能<span>跨境</span></div>
+            <ul class="nav-menu">
+                <li><a href="#home">首页</a></li>
                 <li><a href="#downloads">资源下载</a></li>
                 <li><a href="#install">安装指南</a></li>
-                <li><a href="#downloads" class="nav-admin-btn" id="adminToggleBtn"><i class="fas fa-user-shield"></i> 管理</a></li>
+                <li><a href="#" class="admin-btn active" id="adminToggle"><i class="fas fa-user-shield"></i> 退出管理</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- ===== Hero 区（无头像） ===== -->
     <section class="hero" id="home">
         <div class="container">
             <h1>裕能跨境电商</h1>
-            <div class="subtitle">
-                <i class="fas fa-cube"></i>
-                内部资源中心
-                <i class="fas fa-cube"></i>
-            </div>
-            <p class="bio">
-                欢迎来到 <strong>裕能跨境电商</strong> 内部资源平台 🚀<br />
-                这里汇集了团队日常所需的运营工具、数据采集插件与文档，
-                助力每一位伙伴高效工作，轻松出海。
-            </p>
+            <div class="sub"><i class="fas fa-cube"></i> 内部资源中心</div>
+            <p>欢迎来到内部资源平台，汇集运营工具、数据采集插件与文档，助力高效工作。</p>
         </div>
     </section>
 
-    <!-- ===== 下载中心 ===== -->
     <section class="downloads" id="downloads">
         <div class="container">
             <h2 class="section-title"><i class="fas fa-cloud-download-alt"></i>资源下载</h2>
-            <p class="section-sub">点击下载按钮获取工具，管理员可上传或编辑资源介绍</p>
-            <div class="file-grid" id="fileGrid"></div>
-            <div class="admin-add-wrapper" id="adminAddWrapper">
-                <button class="btn-add-file" id="openAddModalBtn"><i class="fas fa-plus-circle"></i> 上传新资源</button>
-            </div>
+            <p class="section-sub">按文件夹分类展示，管理员可管理分类与资源</p>
+            <div id="fileContainer"><div class="category-group">
+                            <h3>
+                                <i class="fas fa-folder"></i> 其他
+                                <span class="category-actions">
+                                    <button data-action="renameCat" data-cat="其他"><i class="fas fa-edit"></i></button>
+                                    <button data-action="deleteCat" data-cat="其他"><i class="fas fa-trash"></i></button>
+                                </span>
+                            </h3>
+                            <div class="file-grid">
+                                <div class="file-card">
+                                    <div class="icon"><i class="fas fa-file"></i></div>
+                                    <h3>1323 <span class="file-badge"><i class="fas fa-check"></i> 有文件</span></h3>
+                                    <span class="version">v1.0</span>
+                                    <p class="desc"></p>
+                                    <div class="meta">
+                                        <span><i class="fas fa-file"></i> ZIP</span>
+                                        <span><i class="fas fa-weight-hanging"></i> 未知</span>
+                                    </div>
+                                    <button class="btn-download" data-index="0">下载</button>
+                                    <div class="admin-controls show">
+                                        <button data-action="editFile" data-index="0"><i class="fas fa-pen"></i> 编辑</button>
+                                        <button data-action="deleteFile" data-index="0" class="del"><i class="fas fa-trash"></i> 删除</button>
+                                    </div>
+                                </div>
+                            </div></div></div>
+            <div class="admin-add show" id="adminAddFile"><button id="addFileBtn"><i class="fas fa-plus"></i> 添加资源</button></div>
         </div>
     </section>
 
-    <!-- ===== 安装指南 ===== -->
     <section class="install-guide" id="install">
         <div class="container">
             <h2 class="section-title"><i class="fas fa-tools"></i>安装方式</h2>
-            <p class="section-sub">按照以下步骤完成工具安装，管理员可增删或编辑安装说明</p>
-            <div class="install-grid" id="installGrid"></div>
-            <div class="admin-add-install-wrapper" id="adminAddInstallWrapper">
-                <button class="btn-add-install" id="openAddInstallModalBtn"><i class="fas fa-plus-circle"></i> 添加安装指南</button>
+            <p class="section-sub">管理员可编辑安装说明</p>
+            <div class="install-grid" id="installGrid">
+                            <div class="install-card">
+                                <h4><i class="fas fa-cube"></i> EXE 安装包</h4>
+                                <ol><li>下载 EXE 文件</li><li>双击运行</li><li>按向导完成安装</li></ol>
+                                <div class="admin-controls show" style="margin-top:10px;border-top:1px dashed #ccc;padding-top:10px;">
+                                    <button data-action="editInstall" data-index="0"><i class="fas fa-pen"></i> 编辑</button>
+                                    <button data-action="deleteInstall" data-index="0" class="del"><i class="fas fa-trash"></i> 删除</button>
+                                </div>
+                            </div>
+                        
+                            <div class="install-card">
+                                <h4><i class="fas fa-cube"></i> ZIP 压缩包</h4>
+                                <ol><li>下载 ZIP</li><li>解压到文件夹</li><li>运行 setup.exe</li></ol>
+                                <div class="admin-controls show" style="margin-top:10px;border-top:1px dashed #ccc;padding-top:10px;">
+                                    <button data-action="editInstall" data-index="1"><i class="fas fa-pen"></i> 编辑</button>
+                                    <button data-action="deleteInstall" data-index="1" class="del"><i class="fas fa-trash"></i> 删除</button>
+                                </div>
+                            </div>
+                        
+                            <div class="install-card">
+                                <h4><i class="fas fa-cube"></i> CRX 扩展</h4>
+                                <ol><li>下载 CRX</li><li>打开 chrome://extensions/</li><li>开启开发者模式，拖入安装</li></ol>
+                                <div class="admin-controls show" style="margin-top:10px;border-top:1px dashed #ccc;padding-top:10px;">
+                                    <button data-action="editInstall" data-index="2"><i class="fas fa-pen"></i> 编辑</button>
+                                    <button data-action="deleteInstall" data-index="2" class="del"><i class="fas fa-trash"></i> 删除</button>
+                                </div>
+                            </div>
+                        </div>
+            <div class="admin-add show" id="adminAddInstall"><button id="addInstallBtn"><i class="fas fa-plus"></i> 添加安装指南</button></div>
+            <div class="export-wrap show" id="exportWrap">
+                <button id="exportBtn"><i class="fas fa-file-export"></i> 导出 HTML 文件</button>
+                <small>导出包含所有当前数据（含上传的文件）的完整 HTML，上传 GitHub 即可同步</small>
             </div>
         </div>
     </section>
 
-    <!-- ===== 页脚 ===== -->
     <footer class="footer">
         <div class="container">
-            <div class="brand">
-                <i class="fas fa-cube" style="color:#4A90D9;"></i>
-                裕能<span style="color:#4A90D9;">跨境</span>电商
-            </div>
-            <div class="author">
-                <i class="fas fa-code"></i>
-                内部资源平台 &copy; 2026 裕能跨境电商
-            </div>
+            <div class="brand"><i class="fas fa-cube" style="color:#4A90D9;"></i> 裕能<span>跨境</span>电商</div>
+            <div>内部资源平台 © 2026</div>
         </div>
     </footer>
 
-    <!-- ===== 模态框：文件 ===== -->
-    <div class="modal-overlay" id="fileModal">
+    <!-- 通用模态框 -->
+    <div class="modal" id="editModal">
         <div class="modal-box">
-            <h2 id="fileModalTitle"><i class="fas fa-edit"></i> 编辑资源</h2>
-            <form id="fileForm" autocomplete="off">
-                <input type="hidden" id="fileEditIndex" value="-1" />
-                <div class="form-group">
-                    <label for="fileName">资源名称 *</label>
-                    <input type="text" id="fileName" placeholder="例如：Shopee 运营助手" required />
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="fileVersion">版本</label>
-                        <input type="text" id="fileVersion" placeholder="v2.0.1" />
+            <h2 id="modalTitle">添加资源</h2>
+            <form id="modalForm">
+                <input type="hidden" id="editIndex" value="-1">
+                <div id="modalFields">
+                    <label>名称 *</label><input id="fName" value="" required="">
+                    <label>版本</label><input id="fVersion" value="">
+                    <label>大小</label><input id="fSize" value="">
+                    <label>详细介绍</label><textarea id="fDesc"></textarea>
+                    <label>图标类 (FontAwesome)</label><input id="fIcon" value="fa-file">
+                    <label>文件类型</label><input id="fExt" value="">
+                    <label>分类（文件夹）</label>
+                    <select id="fCategory">
+                        <option value="运营工具">运营工具</option><option value="数据工具">数据工具</option><option value="其他" selected="">其他</option>
+                    </select>
+                    <div style="margin-top:8px;"><button type="button" id="addCategoryBtn" style="background:#edf2f7;border:1px solid #ccc;border-radius:6px;padding:4px 12px;cursor:pointer;"><i class="fas fa-plus"></i> 新建分类</button></div>
+                    <label>上传文件 (可选)</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="fFile">
+                        
                     </div>
-                    <div class="form-group">
-                        <label for="fileSize">文件大小</label>
-                        <input type="text" id="fileSize" placeholder="12.5 MB" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="fileDesc">详细介绍 *</label>
-                    <textarea id="fileDesc" placeholder="请描述工具功能、适用场景…" required></textarea>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="fileIcon">图标 (FontAwesome类名)</label>
-                        <input type="text" id="fileIcon" placeholder="fa-cube" value="fa-cube" />
-                    </div>
-                    <div class="form-group">
-                        <label for="fileExt">文件类型</label>
-                        <input type="text" id="fileExt" placeholder="EXE / ZIP / CRX" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="fileUpload">上传文件 (模拟)</label>
-                    <input type="file" id="fileUpload" />
-                    <small style="color:#718096; font-size:0.8rem;">选择文件仅用于模拟，实际将存储元数据</small>
                 </div>
                 <div class="modal-actions">
-                    <button type="button" class="btn-modal-cancel" id="fileModalCancel">取消</button>
-                    <button type="submit" class="btn-modal-save"><i class="fas fa-save"></i> 保存</button>
+                    <button type="button" class="cancel" id="modalCancel">取消</button>
+                    <button type="submit" class="save">保存</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- ===== 模态框：安装指南 ===== -->
-    <div class="modal-overlay" id="installModal">
-        <div class="modal-box">
-            <h2 id="installModalTitle"><i class="fas fa-edit"></i> 编辑安装说明</h2>
-            <form id="installForm" autocomplete="off">
-                <input type="hidden" id="installEditIndex" value="-1" />
-                <div class="form-group">
-                    <label for="installTitle">标题 *</label>
-                    <input type="text" id="installTitle" placeholder="例如：通用 EXE 安装包" required />
-                </div>
-                <div class="form-group">
-                    <label for="installSteps">步骤 (每行一个步骤) *</label>
-                    <textarea id="installSteps" rows="6" placeholder="1. 下载文件&#10;2. 双击运行&#10;3. 完成安装" required></textarea>
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn-modal-cancel" id="installModalCancel">取消</button>
-                    <button type="submit" class="btn-modal-save"><i class="fas fa-save"></i> 保存</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- ============================================================ -->
-    <!-- JavaScript -->
-    <!-- ============================================================ -->
     <script>
         (function() {
             'use strict';
 
-            // ---------- 数据 ----------
-            const FILE_STORAGE = 'yune_cb_files';
-            const INSTALL_STORAGE = 'yune_cb_install';
+            // -------- 数据键名 --------
+            const FILE_KEY = 'yune_files';
+            const INSTALL_KEY = 'yune_install';
+            const CATEGORY_KEY = 'yune_categories';
 
-            const defaultFiles = [{
-                name: '裕能Shopee运营助手',
-                version: 'v2.0.1',
-                desc: '一站式Shopee店铺管理工具，支持订单同步、库存预警、数据看板，大幅提升运营效率。',
-                size: '12.5 MB',
-                icon: 'fa-cube',
-                ext: 'EXE 安装包',
-                fileName: '裕能Shopee运营助手_v2.0.1.exe'
-            }, {
-                name: '跨境商品数据采集器',
-                version: 'v1.3.0',
-                desc: '高效采集 Shopee、Lazada 等平台商品数据，支持多维度筛选与 CSV 导出，选品更轻松。',
-                size: '8.2 MB',
-                icon: 'fa-database',
-                ext: 'ZIP 压缩包',
-                fileName: '跨境商品数据采集器_v1.3.0.zip'
-            }, {
-                name: '多语言翻译插件',
-                version: 'v1.0.2',
-                desc: '一键翻译商品标题、描述与详情，支持 12 种语言，帮助您快速拓展东南亚市场。',
-                size: '2.1 MB',
-                icon: 'fa-language',
-                ext: 'CRX 扩展',
-                fileName: '多语言翻译插件_v1.0.2.crx'
-            }];
+            // -------- 默认数据 --------
+            const defaultFiles = [
+                { name: '裕能Shopee运营助手', version: 'v2.0.1', desc: '一站式Shopee店铺管理工具，支持订单同步、库存预警。', size: '12.5 MB',
+                    icon: 'fa-cube', ext: 'EXE', fileName: 'shopee.exe', category: '运营工具', fileData: null },
+                { name: '跨境商品数据采集器', version: 'v1.3.0', desc: '高效采集Shopee、Lazada商品数据，支持CSV导出。', size: '8.2 MB',
+                    icon: 'fa-database', ext: 'ZIP', fileName: 'collector.zip', category: '数据工具', fileData: null },
+                { name: '多语言翻译插件', version: 'v1.0.2', desc: '一键翻译商品标题、描述，支持12种语言。', size: '2.1 MB',
+                    icon: 'fa-language', ext: 'CRX', fileName: 'translate.crx', category: '运营工具', fileData: null }
+            ];
+            const defaultInstall = [
+                { title: 'EXE 安装包', steps: ['下载 EXE 文件', '双击运行', '按向导完成安装'] },
+                { title: 'ZIP 压缩包', steps: ['下载 ZIP', '解压到文件夹', '运行 setup.exe'] },
+                { title: 'CRX 扩展', steps: ['下载 CRX', '打开 chrome://extensions/', '开启开发者模式，拖入安装'] }
+            ];
+            const defaultCategories = ['运营工具', '数据工具', '其他'];
 
-            const defaultInstall = [{
-                title: '通用 EXE 安装包',
-                icon: 'fa-cube',
-                steps: [
-                    '下载 <strong>EXE 安装包</strong> 到本地',
-                    '双击运行安装程序，点击「下一步」',
-                    '选择安装目录（默认即可），继续安装',
-                    '安装完成后，桌面生成快捷方式，双击启动'
-                ]
-            }, {
-                title: 'ZIP 压缩包工具',
-                icon: 'fa-archive',
-                steps: [
-                    '下载 <strong>ZIP 压缩包</strong> 并解压',
-                    '进入解压文件夹，运行 <code>setup.exe</code> 或 <code>start.bat</code>',
-                    '按向导完成配置（数据库连接等）',
-                    '启动工具，登录后即可使用'
-                ]
-            }, {
-                title: '浏览器扩展 (CRX)',
-                icon: 'fa-puzzle-piece',
-                steps: [
-                    '下载 <strong>CRX 文件</strong> 到本地',
-                    '打开 Chrome 浏览器，进入 <code>chrome://extensions/</code>',
-                    '开启右上角「开发者模式」',
-                    '将 CRX 文件拖入页面，点击「添加扩展」'
-                ]
-            }];
+            // -------- 状态 --------
+            let files = [],
+                installs = [],
+                categories = [],
+                isAdmin = false;
 
-            // 状态
-            let files = [];
-            let installs = [];
-            let isAdmin = false;
-
-            // DOM 引用
-            const fileGrid = document.getElementById('fileGrid');
+            // -------- DOM 引用 --------
+            const fileContainer = document.getElementById('fileContainer');
             const installGrid = document.getElementById('installGrid');
-            const adminToggleBtn = document.getElementById('adminToggleBtn');
-            const adminAddWrapper = document.getElementById('adminAddWrapper');
-            const adminAddInstallWrapper = document.getElementById('adminAddInstallWrapper');
+            const adminToggle = document.getElementById('adminToggle');
+            const adminAddFile = document.getElementById('adminAddFile');
+            const adminAddInstall = document.getElementById('adminAddInstall');
+            const exportWrap = document.getElementById('exportWrap');
+            const modal = document.getElementById('editModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalForm = document.getElementById('modalForm');
+            const editIndex = document.getElementById('editIndex');
+            const modalFields = document.getElementById('modalFields');
+            const modalCancel = document.getElementById('modalCancel');
+            const addFileBtn = document.getElementById('addFileBtn');
+            const addInstallBtn = document.getElementById('addInstallBtn');
+            const exportBtn = document.getElementById('exportBtn');
 
-            // 文件模态框
-            const fileModal = document.getElementById('fileModal');
-            const fileModalTitle = document.getElementById('fileModalTitle');
-            const fileEditIndex = document.getElementById('fileEditIndex');
-            const fileForm = document.getElementById('fileForm');
-            const fileName = document.getElementById('fileName');
-            const fileVersion = document.getElementById('fileVersion');
-            const fileSize = document.getElementById('fileSize');
-            const fileDesc = document.getElementById('fileDesc');
-            const fileIcon = document.getElementById('fileIcon');
-            const fileExt = document.getElementById('fileExt');
-            const fileUpload = document.getElementById('fileUpload');
-            const fileModalCancel = document.getElementById('fileModalCancel');
-            const openAddFileBtn = document.getElementById('openAddModalBtn');
-
-            // 安装模态框
-            const installModal = document.getElementById('installModal');
-            const installModalTitle = document.getElementById('installModalTitle');
-            const installEditIndex = document.getElementById('installEditIndex');
-            const installForm = document.getElementById('installForm');
-            const installTitle = document.getElementById('installTitle');
-            const installSteps = document.getElementById('installSteps');
-            const installModalCancel = document.getElementById('installModalCancel');
-            const openAddInstallBtn = document.getElementById('openAddInstallModalBtn');
-
-            // ---------- 工具 ----------
+            // -------- 数据加载与存储 --------
             function loadData() {
-                // 文件
-                const storedFiles = localStorage.getItem(FILE_STORAGE);
-                if (storedFiles) {
-                    try {
-                        files = JSON.parse(storedFiles);
-                        if (!Array.isArray(files) || files.length === 0) files = JSON.parse(JSON.stringify(defaultFiles));
-                    } catch { files = JSON.parse(JSON.stringify(defaultFiles)); }
+                const sf = localStorage.getItem(FILE_KEY);
+                files = sf ? JSON.parse(sf) : JSON.parse(JSON.stringify(defaultFiles));
+                const si = localStorage.getItem(INSTALL_KEY);
+                installs = si ? JSON.parse(si) : JSON.parse(JSON.stringify(defaultInstall));
+                const sc = localStorage.getItem(CATEGORY_KEY);
+                categories = sc ? JSON.parse(sc) : JSON.parse(JSON.stringify(defaultCategories));
+                // 补齐 fileName
+                files.forEach(f => { if (!f.fileName) f.fileName = f.name.replace(/\s/g, '_') + '.' + (f.ext || 'bin'); });
+                // 确保每个文件有 category 字段
+                files.forEach(f => { if (!f.category) f.category = '其他'; });
+                // 确保 categories 包含所有文件中的分类
+                const existing = new Set(categories);
+                files.forEach(f => { if (!existing.has(f.category)) { categories.push(f.category);
+                        existing.add(f.category); } });
+                saveAll();
+            }
+
+            function saveAll() {
+                localStorage.setItem(FILE_KEY, JSON.stringify(files));
+                localStorage.setItem(INSTALL_KEY, JSON.stringify(installs));
+                localStorage.setItem(CATEGORY_KEY, JSON.stringify(categories));
+            }
+
+            function escapeHtml(s) {
+                if (!s) return '';
+                return String(s).replace(/[&<>"']/g, function(m) {
+                    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' } [m] || m;
+                });
+            }
+
+            // -------- 渲染 --------
+            function render() {
+                // 文件按分类分组
+                if (!files.length) {
+                    fileContainer.innerHTML = '<div class="empty"><i class="fas fa-inbox"></i><p>暂无资源</p></div>';
                 } else {
-                    files = JSON.parse(JSON.stringify(defaultFiles));
-                }
-                files.forEach(f => {
-                    if (!f.fileName) {
-                        f.fileName = f.name.replace(/\s/g, '_') + '_' + (f.version || 'v1.0') + '.' + (f.ext || 'bin');
+                    const grouped = {};
+                    categories.forEach(cat => { grouped[cat] = []; });
+                    files.forEach(f => {
+                        const cat = f.category || '其他';
+                        if (!grouped[cat]) grouped[cat] = [];
+                        grouped[cat].push(f);
+                    });
+                    let html = '';
+                    for (const [cat, items] of Object.entries(grouped)) {
+                        if (items.length === 0) continue;
+                        html += `<div class="category-group">
+                            <h3>
+                                <i class="fas fa-folder"></i> ${escapeHtml(cat)}
+                                ${isAdmin ? `<span class="category-actions">
+                                    <button data-action="renameCat" data-cat="${escapeHtml(cat)}"><i class="fas fa-edit"></i></button>
+                                    <button data-action="deleteCat" data-cat="${escapeHtml(cat)}"><i class="fas fa-trash"></i></button>
+                                </span>` : ''}
+                            </h3>
+                            <div class="file-grid">`;
+                        items.forEach((f, idx) => {
+                            const globalIndex = files.indexOf(f);
+                            const hasFile = f.fileData && f.fileData.length > 0;
+                            html += `
+                                <div class="file-card">
+                                    <div class="icon"><i class="fas ${f.icon||'fa-file'}"></i></div>
+                                    <h3>${escapeHtml(f.name)} ${hasFile ? '<span class="file-badge"><i class="fas fa-check"></i> 有文件</span>' : ''}</h3>
+                                    <span class="version">${escapeHtml(f.version||'v1.0')}</span>
+                                    <p class="desc">${escapeHtml(f.desc||'')}</p>
+                                    <div class="meta">
+                                        <span><i class="fas fa-file"></i> ${escapeHtml(f.ext||'文件')}</span>
+                                        <span><i class="fas fa-weight-hanging"></i> ${escapeHtml(f.size||'未知')}</span>
+                                    </div>
+                                    <button class="btn-download" data-index="${globalIndex}">下载</button>
+                                    <div class="admin-controls ${isAdmin?'show':''}">
+                                        <button data-action="editFile" data-index="${globalIndex}"><i class="fas fa-pen"></i> 编辑</button>
+                                        <button data-action="deleteFile" data-index="${globalIndex}" class="del"><i class="fas fa-trash"></i> 删除</button>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        html += `</div></div>`;
                     }
-                });
-                saveFiles();
+                    fileContainer.innerHTML = html;
+                }
 
-                // 安装
-                const storedInstall = localStorage.getItem(INSTALL_STORAGE);
-                if (storedInstall) {
-                    try {
-                        installs = JSON.parse(storedInstall);
-                        if (!Array.isArray(installs) || installs.length === 0) installs = JSON.parse(JSON.stringify(
-                            defaultInstall));
-                    } catch { installs = JSON.parse(JSON.stringify(defaultInstall)); }
+                // 安装指南
+                if (!installs.length) {
+                    installGrid.innerHTML = '<div class="empty"><i class="fas fa-info-circle"></i><p>暂无安装指南</p></div>';
                 } else {
-                    installs = JSON.parse(JSON.stringify(defaultInstall));
-                }
-                saveInstall();
-            }
-
-            function saveFiles() {
-                localStorage.setItem(FILE_STORAGE, JSON.stringify(files));
-            }
-
-            function saveInstall() {
-                localStorage.setItem(INSTALL_STORAGE, JSON.stringify(installs));
-            }
-
-            function escapeHtml(text) {
-                if (!text) return '';
-                const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
-                return String(text).replace(/[&<>"']/g, m => map[m]);
-            }
-
-            // ---------- 渲染 ----------
-            function renderFiles() {
-                if (files.length === 0) {
-                    fileGrid.innerHTML =
-                        `<div class="empty-state"><i class="fas fa-inbox"></i><p>暂无资源，点击「上传新资源」添加。</p></div>`;
-                    return;
-                }
-                let html = '';
-                files.forEach((f, idx) => {
-                    html += `
-                        <div class="file-card" data-index="${idx}">
-                            <div class="file-icon"><i class="fas ${f.icon || 'fa-file'}"></i></div>
-                            <h3>${escapeHtml(f.name)}</h3>
-                            <span class="file-version">${escapeHtml(f.version || 'v1.0')}</span>
-                            <p class="file-desc">${escapeHtml(f.desc || '暂无描述')}</p>
-                            <div class="file-meta">
-                                <span><i class="fas fa-file"></i> ${escapeHtml(f.ext || '文件')}</span>
-                                <span><i class="fas fa-weight-hanging"></i> ${escapeHtml(f.size || '未知')}</span>
-                                <span><i class="fas fa-calendar-alt"></i> 2026-09-07</span>
+                    let html = '';
+                    installs.forEach((item, i) => {
+                        const stepsHtml = item.steps.map(s => `<li>${s}</li>`).join('');
+                        html += `
+                            <div class="install-card">
+                                <h4><i class="fas fa-cube"></i> ${escapeHtml(item.title)}</h4>
+                                <ol>${stepsHtml}</ol>
+                                <div class="admin-controls ${isAdmin?'show':''}" style="margin-top:10px;border-top:1px dashed #ccc;padding-top:10px;">
+                                    <button data-action="editInstall" data-index="${i}"><i class="fas fa-pen"></i> 编辑</button>
+                                    <button data-action="deleteInstall" data-index="${i}" class="del"><i class="fas fa-trash"></i> 删除</button>
+                                </div>
                             </div>
-                            <button class="btn-download" data-filename="${escapeHtml(f.fileName || f.name)}">
-                                <span class="btn-text"><i class="fas fa-download"></i> 下载</span>
-                                <span class="spinner"></span>
-                            </button>
-                            <div class="admin-controls ${isAdmin ? 'show' : ''}">
-                                <button class="btn-edit-file" data-index="${idx}"><i class="fas fa-pen"></i> 编辑</button>
-                                <button class="btn-delete-file" data-index="${idx}"><i class="fas fa-trash"></i> 删除</button>
-                            </div>
-                        </div>
-                    `;
-                });
-                fileGrid.innerHTML = html;
+                        `;
+                    });
+                    installGrid.innerHTML = html;
+                }
 
-                // 下载事件
-                document.querySelectorAll('.file-card .btn-download').forEach(btn => {
-                    btn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        if (this.classList.contains('loading')) return;
-                        const fn = this.getAttribute('data-filename') || 'file.bin';
-                        this.classList.add('loading');
-                        const delay = 1800 + Math.random() * 1400;
-                        const that = this;
-                        setTimeout(() => {
+                // 管理员界面控制
+                adminAddFile.classList.toggle('show', isAdmin);
+                adminAddInstall.classList.toggle('show', isAdmin);
+                exportWrap.classList.toggle('show', isAdmin);
+                adminToggle.innerHTML = isAdmin ? '<i class="fas fa-user-shield"></i> 退出管理' : '<i class="fas fa-user-shield"></i> 管理';
+                adminToggle.classList.toggle('active', isAdmin);
+
+                // 下载事件（修复 MIME 类型）
+                document.querySelectorAll('.btn-download').forEach(btn => {
+                    btn.onclick = function() {
+                        const idx = parseInt(this.dataset.index);
+                        const f = files[idx];
+                        if (!f) return;
+                        const fileName = f.fileName || (f.name + '.' + (f.ext || 'bin'));
+                        if (f.fileData && f.fileData.length > 0) {
                             try {
-                                const blob = new Blob(
-                                    ['裕能跨境电商资源: ' + fn + '\n下载时间: ' + new Date().toLocaleString()],
-                                    { type: 'application/octet-stream' }
-                                );
-                                const url = URL.createObjectURL(blob);
-                                const link = document.createElement('a');
-                                link.href = url;
-                                link.download = fn;
-                                document.body.appendChild(link);
-                                link.click();
-                                document.body.removeChild(link);
-                                setTimeout(() => URL.revokeObjectURL(url), 5000);
-                            } catch (err) {
-                                window.open('#', '_blank');
+                                const byteCharacters = atob(f.fileData);
+                                const byteNumbers = new Array(byteCharacters.length);
+                                for (let i = 0; i < byteCharacters.length; i++) {
+                                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                                }
+                                const byteArray = new Uint8Array(byteNumbers);
+                                // 强制使用 application/octet-stream 确保下载为二进制文件
+                                const blob = new Blob([byteArray], { type: 'application/octet-stream' });
+                                const a = document.createElement('a');
+                                a.href = URL.createObjectURL(blob);
+                                a.download = fileName;
+                                document.body.appendChild(a);
+                                a.click();
+                                document.body.removeChild(a);
+                                setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+                            } catch (e) {
+                                alert('文件数据损坏，无法下载');
                             }
-                            that.classList.remove('loading');
-                            const txt = that.querySelector('.btn-text');
-                            if (txt) {
-                                txt.innerHTML = '<i class="fas fa-check"></i> 已下载';
-                                setTimeout(() => { txt.innerHTML = '<i class="fas fa-download"></i> 下载'; }, 2500);
-                            }
-                        }, delay);
-                    });
+                        } else {
+                            const blob = new Blob(['裕能资源: ' + fileName + '\n（此文件未上传真实数据，仅为演示）\n时间: ' + new Date()
+                                .toLocaleString()], { type: 'application/octet-stream' });
+                            const a = document.createElement('a');
+                            a.href = URL.createObjectURL(blob);
+                            a.download = fileName;
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+                        }
+                    };
                 });
 
-                // 编辑/删除
-                document.querySelectorAll('.btn-edit-file').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const idx = parseInt(this.dataset.index, 10);
-                        openFileModal('编辑资源', idx);
-                    });
+                // 文件管理按钮
+                document.querySelectorAll('[data-action="editFile"]').forEach(btn => {
+                    btn.onclick = function() { openFileForm(parseInt(this.dataset.index)); };
                 });
-                document.querySelectorAll('.btn-delete-file').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const idx = parseInt(this.dataset.index, 10);
-                        if (confirm(`确定删除「${files[idx].name}」？`)) {
+                document.querySelectorAll('[data-action="deleteFile"]').forEach(btn => {
+                    btn.onclick = function() {
+                        const idx = parseInt(this.dataset.index);
+                        if (confirm('删除「' + files[idx].name + '」？')) {
                             files.splice(idx, 1);
-                            saveFiles();
-                            renderFiles();
+                            saveAll();
+                            render();
                         }
-                    });
+                    };
                 });
 
-                adminAddWrapper.classList.toggle('show', isAdmin);
-            }
-
-            function renderInstall() {
-                if (installs.length === 0) {
-                    installGrid.innerHTML =
-                        `<div class="empty-state"><i class="fas fa-info-circle"></i><p>暂无安装指南，请管理员添加。</p></div>`;
-                    return;
-                }
-                let html = '';
-                installs.forEach((item, idx) => {
-                    const stepsHtml = item.steps.map(s => `<li>${s}</li>`).join('');
-                    html += `
-                        <div class="install-card" data-index="${idx}">
-                            <h4><i class="fas ${item.icon || 'fa-cube'}"></i> ${escapeHtml(item.title)}</h4>
-                            <ol>${stepsHtml}</ol>
-                            <div class="install-admin-controls ${isAdmin ? 'show' : ''}">
-                                <button class="btn-edit-install" data-index="${idx}"><i class="fas fa-pen"></i> 编辑</button>
-                                <button class="btn-delete-install" data-index="${idx}"><i class="fas fa-trash"></i> 删除</button>
-                            </div>
-                        </div>
-                    `;
+                // 安装管理按钮
+                document.querySelectorAll('[data-action="editInstall"]').forEach(btn => {
+                    btn.onclick = function() { openInstallForm(parseInt(this.dataset.index)); };
                 });
-                installGrid.innerHTML = html;
-
-                // 编辑
-                document.querySelectorAll('.btn-edit-install').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const idx = parseInt(this.dataset.index, 10);
-                        openInstallModal('编辑安装说明', idx);
-                    });
-                });
-                // 删除
-                document.querySelectorAll('.btn-delete-install').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const idx = parseInt(this.dataset.index, 10);
-                        if (confirm(`确定删除「${installs[idx].title}」？`)) {
+                document.querySelectorAll('[data-action="deleteInstall"]').forEach(btn => {
+                    btn.onclick = function() {
+                        const idx = parseInt(this.dataset.index);
+                        if (confirm('删除「' + installs[idx].title + '」？')) {
                             installs.splice(idx, 1);
-                            saveInstall();
-                            renderInstall();
+                            saveAll();
+                            render();
                         }
-                    });
+                    };
                 });
 
-                adminAddInstallWrapper.classList.toggle('show', isAdmin);
+                // 分类管理按钮（重命名、删除）
+                document.querySelectorAll('[data-action="renameCat"]').forEach(btn => {
+                    btn.onclick = function() {
+                        const oldName = this.dataset.cat;
+                        const newName = prompt('重命名分类「' + oldName + '」为：', oldName);
+                        if (newName && newName.trim() && newName.trim() !== oldName) {
+                            const trimmed = newName.trim();
+                            if (categories.includes(trimmed)) {
+                                alert('分类名称已存在');
+                                return;
+                            }
+                            const idx = categories.indexOf(oldName);
+                            if (idx !== -1) categories[idx] = trimmed;
+                            files.forEach(f => { if (f.category === oldName) f.category = trimmed; });
+                            saveAll();
+                            render();
+                        }
+                    };
+                });
+                document.querySelectorAll('[data-action="deleteCat"]').forEach(btn => {
+                    btn.onclick = function() {
+                        const cat = this.dataset.cat;
+                        if (confirm('删除分类「' + cat + '」及其所有文件？')) {
+                            files = files.filter(f => f.category !== cat);
+                            const idx = categories.indexOf(cat);
+                            if (idx !== -1) categories.splice(idx, 1);
+                            saveAll();
+                            render();
+                        }
+                    };
+                });
             }
 
-            // ---------- 管理员 ----------
-            function toggleAdmin() {
+            // -------- 文件表单（含文件上传） --------
+            function openFileForm(index) {
+                const isEdit = index >= 0 && index < files.length;
+                const f = isEdit ? files[index] : { name: '', version: '', desc: '', size: '', icon: 'fa-file', ext: '',
+                    category: '其他', fileData: null };
+                modalTitle.textContent = isEdit ? '编辑资源' : '添加资源';
+                editIndex.value = index;
+                let catOptions = categories.map(c => `<option value="${escapeHtml(c)}" ${c===f.category?'selected':''}>${escapeHtml(c)}</option>`).join('');
+                const hasFile = f.fileData && f.fileData.length > 0;
+                modalFields.innerHTML = `
+                    <label>名称 *</label><input id="fName" value="${escapeHtml(f.name)}" required />
+                    <label>版本</label><input id="fVersion" value="${escapeHtml(f.version)}" />
+                    <label>大小</label><input id="fSize" value="${escapeHtml(f.size)}" />
+                    <label>详细介绍</label><textarea id="fDesc">${escapeHtml(f.desc)}</textarea>
+                    <label>图标类 (FontAwesome)</label><input id="fIcon" value="${escapeHtml(f.icon||'fa-file')}" />
+                    <label>文件类型</label><input id="fExt" value="${escapeHtml(f.ext)}" />
+                    <label>分类（文件夹）</label>
+                    <select id="fCategory">
+                        ${catOptions}
+                    </select>
+                    ${isAdmin ? `<div style="margin-top:8px;"><button type="button" id="addCategoryBtn" style="background:#edf2f7;border:1px solid #ccc;border-radius:6px;padding:4px 12px;cursor:pointer;"><i class="fas fa-plus"></i> 新建分类</button></div>` : ''}
+                    <label>上传文件 (可选)</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="fFile" />
+                        ${hasFile ? `<p style="font-size:0.8rem;color:#4A90D9;"><i class="fas fa-check"></i> 已有文件 (${(f.fileData.length * 3/4 / 1024).toFixed(1)} KB)，重新选择将覆盖</p>` : ''}
+                    </div>
+                `;
+                modal.classList.add('active');
+
+                const addCatBtn = document.getElementById('addCategoryBtn');
+                if (addCatBtn) {
+                    addCatBtn.onclick = function() {
+                        const newCat = prompt('请输入新分类名称：');
+                        if (newCat && newCat.trim()) {
+                            const trimmed = newCat.trim();
+                            if (!categories.includes(trimmed)) {
+                                categories.push(trimmed);
+                                saveAll();
+                                const select = document.getElementById('fCategory');
+                                const opt = document.createElement('option');
+                                opt.value = trimmed;
+                                opt.textContent = trimmed;
+                                opt.selected = true;
+                                select.appendChild(opt);
+                                const options = Array.from(select.options);
+                                options.sort((a, b) => a.value.localeCompare(b.value));
+                                select.innerHTML = '';
+                                options.forEach(o => select.appendChild(o));
+                            } else {
+                                alert('分类已存在');
+                            }
+                        }
+                    };
+                }
+
+                modalForm.onsubmit = function(e) {
+                    e.preventDefault();
+                    const name = document.getElementById('fName').value.trim();
+                    if (!name) return alert('名称不能为空');
+                    const fileInput = document.getElementById('fFile');
+                    const file = fileInput.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(ev) {
+                            const base64 = ev.target.result.split(',')[1];
+                            saveFileData(base64);
+                        };
+                        reader.onerror = function() { alert('读取文件失败'); };
+                        reader.readAsDataURL(file);
+                    } else {
+                        saveFileData(null);
+                    }
+
+                    function saveFileData(base64Data) {
+                        const idx = parseInt(editIndex.value);
+                        const newFile = {
+                            name: name,
+                            version: document.getElementById('fVersion').value.trim() || 'v1.0',
+                            size: document.getElementById('fSize').value.trim() || '未知',
+                            desc: document.getElementById('fDesc').value.trim() || '',
+                            icon: document.getElementById('fIcon').value.trim() || 'fa-file',
+                            ext: document.getElementById('fExt').value.trim() || '文件',
+                            category: document.getElementById('fCategory').value || '其他',
+                            fileName: name.replace(/\s/g, '_') + '.' + (document.getElementById('fExt').value.trim() ||
+                            'bin'),
+                            fileData: base64Data !== null ? base64Data : (idx >= 0 && idx < files.length ? files[idx]
+                                .fileData : null)
+                        };
+                        if (idx >= 0 && idx < files.length) {
+                            files[idx] = newFile;
+                        } else {
+                            files.push(newFile);
+                        }
+                        if (!categories.includes(newFile.category)) {
+                            categories.push(newFile.category);
+                        }
+                        saveAll();
+                        render();
+                        closeModal();
+                    }
+                };
+            }
+
+            // -------- 安装表单 --------
+            function openInstallForm(index) {
+                const isEdit = index >= 0 && index < installs.length;
+                const item = isEdit ? installs[index] : { title: '', steps: [''] };
+                modalTitle.textContent = isEdit ? '编辑安装指南' : '添加安装指南';
+                editIndex.value = index;
+                modalFields.innerHTML = `
+                    <label>标题 *</label><input id="iTitle" value="${escapeHtml(item.title)}" required />
+                    <label>步骤 (每行一个) *</label><textarea id="iSteps" rows="4">${escapeHtml(item.steps ? item.steps.join('\n') : '')}</textarea>
+                `;
+                modal.classList.add('active');
+                modalForm.onsubmit = function(e) {
+                    e.preventDefault();
+                    const title = document.getElementById('iTitle').value.trim();
+                    const stepsRaw = document.getElementById('iSteps').value.trim();
+                    if (!title) return alert('标题不能为空');
+                    const steps = stepsRaw.split('\n').filter(s => s.trim() !== '');
+                    if (!steps.length) return alert('至少填写一个步骤');
+                    const idx = parseInt(editIndex.value);
+                    const newItem = { title, steps };
+                    if (idx >= 0 && idx < installs.length) {
+                        installs[idx] = newItem;
+                    } else {
+                        installs.push(newItem);
+                    }
+                    saveAll();
+                    render();
+                    closeModal();
+                };
+            }
+
+            function closeModal() {
+                modal.classList.remove('active');
+                modalForm.onsubmit = null;
+            }
+            modalCancel.onclick = closeModal;
+            modal.onclick = function(e) { if (e.target === modal) closeModal(); };
+
+            // -------- 按钮事件 --------
+            addFileBtn.onclick = function() { openFileForm(-1); };
+            addInstallBtn.onclick = function() { openInstallForm(-1); };
+
+            // -------- 管理员切换 --------
+            adminToggle.addEventListener('click', function(e) {
+                e.preventDefault();
                 if (!isAdmin) {
                     const pwd = prompt('请输入管理员密码 (默认: yuneng)');
                     if (pwd === 'yuneng') {
                         isAdmin = true;
-                        adminToggleBtn.classList.add('admin-active');
-                        adminToggleBtn.innerHTML = '<i class="fas fa-user-shield"></i> 退出管理';
-                        renderFiles();
-                        renderInstall();
+                        render();
                     } else if (pwd !== null) {
                         alert('密码错误');
                     }
                 } else {
                     isAdmin = false;
-                    adminToggleBtn.classList.remove('admin-active');
-                    adminToggleBtn.innerHTML = '<i class="fas fa-user-shield"></i> 管理';
-                    renderFiles();
-                    renderInstall();
+                    render();
                 }
-            }
-            adminToggleBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                toggleAdmin();
             });
 
-            // ---------- 文件模态框 ----------
-            function openFileModal(title, index) {
-                fileModalTitle.textContent = title;
-                fileEditIndex.value = index;
-                if (index >= 0 && index < files.length) {
-                    const f = files[index];
-                    fileName.value = f.name || '';
-                    fileVersion.value = f.version || '';
-                    fileSize.value = f.size || '';
-                    fileDesc.value = f.desc || '';
-                    fileIcon.value = f.icon || 'fa-file';
-                    fileExt.value = f.ext || '';
-                } else {
-                    fileName.value = '';
-                    fileVersion.value = '';
-                    fileSize.value = '';
-                    fileDesc.value = '';
-                    fileIcon.value = 'fa-file';
-                    fileExt.value = '';
-                }
-                fileUpload.value = '';
-                fileModal.classList.add('active');
-            }
-            function closeFileModal() { fileModal.classList.remove('active'); }
-            fileModalCancel.addEventListener('click', closeFileModal);
-            fileModal.addEventListener('click', function(e) { if (e.target === fileModal) closeFileModal(); });
+            // -------- 导出 --------
+            exportBtn.onclick = function() {
+                const style = document.querySelector('style').innerHTML;
+                const bodyHTML = document.body.innerHTML;
+                const filesData = JSON.stringify(files, null, 2);
+                const installData = JSON.stringify(installs, null, 2);
+                const catData = JSON.stringify(categories, null, 2);
+                const exportHtml = `<!DOCTYPE html>
+        <html lang="zh-CN">
+        <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>裕能跨境电商 · 内部资源</title>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+            <style>${style}</style>
+        </head>
+        <body>${bodyHTML}
+        <script>
+            (function() {
+                const FILE_KEY = 'yune_files';
+                const INSTALL_KEY = 'yune_install';
+                const CATEGORY_KEY = 'yune_categories';
+                const defaultFiles = ${filesData};
+                const defaultInstall = ${installData};
+                const defaultCategories = ${catData};
+                localStorage.setItem(FILE_KEY, JSON.stringify(defaultFiles));
+                localStorage.setItem(INSTALL_KEY, JSON.stringify(defaultInstall));
+                localStorage.setItem(CATEGORY_KEY, JSON.stringify(defaultCategories));
+            })();
+        <\/script>
+        </body>
+        </html>`;
+                const blob = new Blob([exportHtml], { type: 'text/html;charset=utf-8' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = 'index.html';
+                a.click();
+                URL.revokeObjectURL(a.href);
+            };
 
-            fileForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const name = fileName.value.trim();
-                const desc = fileDesc.value.trim();
-                if (!name || !desc) { alert('请填写资源名称和详细介绍'); return; }
-                const idx = parseInt(fileEditIndex.value, 10);
-                const newFile = {
-                    name: name,
-                    version: fileVersion.value.trim() || 'v1.0',
-                    desc: desc,
-                    size: fileSize.value.trim() || '未知',
-                    icon: fileIcon.value.trim() || 'fa-file',
-                    ext: fileExt.value.trim() || '文件',
-                    fileName: name.replace(/\s/g, '_') + '_' + (fileVersion.value.trim() || 'v1.0') + '.' + (fileExt.value
-                        .trim() || 'bin')
-                };
-                if (fileUpload.files.length > 0) {
-                    const up = fileUpload.files[0];
-                    newFile.fileName = up.name;
-                    if (!fileSize.value.trim()) {
-                        newFile.size = (up.size / (1024 * 1024)).toFixed(1) + ' MB';
-                    }
-                    if (!fileExt.value.trim()) {
-                        newFile.ext = up.name.split('.').pop().toUpperCase() + ' 文件';
-                    }
-                }
-                if (idx >= 0 && idx < files.length) {
-                    files[idx] = newFile;
-                } else {
-                    files.push(newFile);
-                }
-                saveFiles();
-                renderFiles();
-                closeFileModal();
-            });
-
-            openAddFileBtn.addEventListener('click', function() {
-                openFileModal('上传新资源', -1);
-            });
-
-            // ---------- 安装模态框 ----------
-            function openInstallModal(title, index) {
-                installModalTitle.textContent = title;
-                installEditIndex.value = index;
-                if (index >= 0 && index < installs.length) {
-                    const item = installs[index];
-                    installTitle.value = item.title || '';
-                    installSteps.value = item.steps ? item.steps.join('\n') : '';
-                } else {
-                    installTitle.value = '';
-                    installSteps.value = '';
-                }
-                installModal.classList.add('active');
-            }
-            function closeInstallModal() { installModal.classList.remove('active'); }
-            installModalCancel.addEventListener('click', closeInstallModal);
-            installModal.addEventListener('click', function(e) { if (e.target === installModal) closeInstallModal(); });
-
-            installForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const title = installTitle.value.trim();
-                const stepsRaw = installSteps.value.trim();
-                if (!title || !stepsRaw) { alert('请填写标题和步骤'); return; }
-                const steps = stepsRaw.split('\n').filter(s => s.trim() !== '');
-                if (steps.length === 0) { alert('请至少填写一个步骤'); return; }
-                const idx = parseInt(installEditIndex.value, 10);
-                const newItem = {
-                    title: title,
-                    icon: 'fa-cube',
-                    steps: steps
-                };
-                if (idx >= 0 && idx < installs.length) {
-                    installs[idx] = newItem;
-                } else {
-                    installs.push(newItem);
-                }
-                saveInstall();
-                renderInstall();
-                closeInstallModal();
-            });
-
-            openAddInstallBtn.addEventListener('click', function() {
-                openInstallModal('添加安装指南', -1);
-            });
-
-            // ---------- 初始化 ----------
+            // -------- 初始化 --------
             loadData();
-            renderFiles();
-            renderInstall();
+            render();
 
-            // 导航高亮
-            const sections = document.querySelectorAll('section[id]');
-            const navLinks = document.querySelectorAll('.nav-menu a:not(.nav-admin-btn)');
-
-            function updateActiveLink() {
-                const scrollPos = window.scrollY + 100;
-                let currentId = 'home';
-                sections.forEach(sec => {
-                    const top = sec.offsetTop;
-                    const height = sec.offsetHeight;
-                    if (scrollPos >= top && scrollPos < top + height) currentId = sec.id;
-                });
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === '#' + currentId) link.classList.add('active');
-                });
-            }
-            window.addEventListener('scroll', function() {
-                requestAnimationFrame(updateActiveLink);
-            });
-            setTimeout(updateActiveLink, 150);
-
-            // 移动端菜单
-            const toggleBtn = document.getElementById('navToggle');
-            const navMenu = document.getElementById('navMenu');
-            let menuOpen = false;
-            toggleBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                menuOpen = !menuOpen;
-                navMenu.classList.toggle('open');
-                toggleBtn.setAttribute('aria-expanded', menuOpen);
-                toggleBtn.querySelector('i').className = menuOpen ? 'fas fa-times' : 'fas fa-bars';
-            });
-            navMenu.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', function() {
-                    if (menuOpen) {
-                        menuOpen = false;
-                        navMenu.classList.remove('open');
-                        toggleBtn.setAttribute('aria-expanded', 'false');
-                        toggleBtn.querySelector('i').className = 'fas fa-bars';
-                    }
-                });
-            });
-            document.addEventListener('click', function(e) {
-                if (menuOpen && !document.querySelector('.navbar').contains(e.target)) {
-                    menuOpen = false;
-                    navMenu.classList.remove('open');
-                    toggleBtn.setAttribute('aria-expanded', 'false');
-                    toggleBtn.querySelector('i').className = 'fas fa-bars';
-                }
-            });
-
-            // 滚动阴影
-            const navbar = document.getElementById('navbar');
-            window.addEventListener('scroll', function() {
-                navbar.classList.toggle('scrolled', window.scrollY > 20);
+            document.querySelectorAll('a[href^="#"]').forEach(a => {
+                a.onclick = function(e) {
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) { e.preventDefault();
+                        target.scrollIntoView({ behavior: 'smooth' }); }
+                };
             });
 
         })();
     </script>
 
-</body>
-</html>
+
+        <script>
+            (function() {
+                const FILE_KEY = 'yune_files';
+                const INSTALL_KEY = 'yune_install';
+                const CATEGORY_KEY = 'yune_categories';
+                const defaultFiles = [
+  {
+    "name": "1323",
+    "version": "v1.0",
+    "size": "未知",
+    "desc": "",
+    "icon": "fa-file",
+    "ext": "ZIP",
+    "category": "其他",
+    "fileName": "1323.ZIP",
+    "fileData": "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"
+  }
+];
+                const defaultInstall = [
+  {
+    "title": "EXE 安装包",
+    "steps": [
+      "下载 EXE 文件",
+      "双击运行",
+      "按向导完成安装"
+    ]
+  },
+  {
+    "title": "ZIP 压缩包",
+    "steps": [
+      "下载 ZIP",
+      "解压到文件夹",
+      "运行 setup.exe"
+    ]
+  },
+  {
+    "title": "CRX 扩展",
+    "steps": [
+      "下载 CRX",
+      "打开 chrome://extensions/",
+      "开启开发者模式，拖入安装"
+    ]
+  }
+];
+                const defaultCategories = [
+  "运营工具",
+  "数据工具",
+  "其他"
+];
+                localStorage.setItem(FILE_KEY, JSON.stringify(defaultFiles));
+                localStorage.setItem(INSTALL_KEY, JSON.stringify(defaultInstall));
+                localStorage.setItem(CATEGORY_KEY, JSON.stringify(defaultCategories));
+            })();
+        </script>
+        </body>
+        </html>
